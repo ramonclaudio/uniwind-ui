@@ -46,10 +46,10 @@ Your project needs:
 - Tailwind CSS 4+
 - clsx, tailwind-merge
 
-Some components use Expo packages by default. Swap them for whatever you use:
+Additional dependencies:
 
-| Component | Default | Swap for |
-|-----------|---------|----------|
+| Component | Dependency | Swappable |
+|-----------|------------|-----------|
 | Select | react-native-dropdown-picker | - |
 | Checkbox | @expo/vector-icons | Any icon library |
 | NavigationMenu | @expo/vector-icons, expo-router | Any icon library, any router |
