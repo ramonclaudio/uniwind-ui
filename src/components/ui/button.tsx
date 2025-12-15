@@ -54,7 +54,7 @@ import { useCSSVariable, useResolveClassNames } from "uniwind";
 // Uses useCSSVariable for efficient single subscription per variant
 const variantColorMap = {
   default: "--color-primary-foreground",
-  destructive: null, // Uses hardcoded white
+  destructive: "--color-destructive-foreground",
   outline: "--color-foreground",
   secondary: "--color-secondary-foreground",
   ghost: "--color-foreground",
@@ -68,7 +68,7 @@ export const buttonVariants = {
   },
   destructive: {
     button: "bg-destructive active:bg-destructive/90 web:hover:bg-destructive/90",
-    text: "text-white font-medium",
+    text: "text-destructive-foreground font-medium",
   },
   outline: {
     button: "border border-border bg-background shadow-xs active:bg-accent web:hover:bg-accent web:hover:text-accent-foreground",
@@ -163,9 +163,7 @@ export const Button = forwardRef<View, ButtonProps>(
 
     // Use useCSSVariable for efficient icon color resolution
     const cssVarName = variantColorMap[variant];
-    const cssVarColor = useCSSVariable(cssVarName || "--color-foreground") as string;
-    // For destructive variant, use white; otherwise use the CSS variable color
-    const iconColor = cssVarName === null ? "#ffffff" : cssVarColor;
+    const iconColor = useCSSVariable(cssVarName) as string;
 
     // Resolve font family from CSS variable for native platforms
     const fontFamily = useCSSVariable("--font-sans") as string;
@@ -175,7 +173,7 @@ export const Button = forwardRef<View, ButtonProps>(
     const ButtonSpinner = ({ className: spinnerClassName }: { className?: string }) => {
       const defaultColor = useCSSVariable("--color-foreground") as string;
       const customStyles = useResolveClassNames(spinnerClassName || "");
-      const resolvedColor = (customStyles.color as string) || defaultColor || "#000";
+      const resolvedColor = (customStyles.color as string) || defaultColor;
       return (
         <ActivityIndicator
           size="small"

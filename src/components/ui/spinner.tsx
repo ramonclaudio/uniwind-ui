@@ -51,7 +51,7 @@ function Spinner({
   const defaultColor = useCSSVariable("--color-foreground") as string;
   // Use useResolveClassNames only when custom className is provided
   const customStyles = useResolveClassNames(className || "");
-  const resolvedColor = (customStyles.color as string) || defaultColor || "#000";
+  const resolvedColor = (customStyles.color as string) || defaultColor;
 
   return (
     <ActivityIndicator

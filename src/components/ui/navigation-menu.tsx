@@ -110,7 +110,7 @@ const ResponsiveContext = createContext<ResponsiveContextValue>({
  */
 function useIconColor(): string {
   const color = useCSSVariable("--color-muted-foreground") as string;
-  return color || "#888";
+  return color;
 }
 
 /**

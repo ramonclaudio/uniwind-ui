@@ -462,7 +462,7 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
             borderRadius: 6,
             marginTop: 4,
             overflow: "hidden",
-            shadowColor: "#000",
+            shadowColor: foreground,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.1,
             shadowRadius: 4,
