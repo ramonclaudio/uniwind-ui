@@ -103,7 +103,7 @@ export const CardTitle = forwardRef<RNText, CardTitleProps>(
     return (
       <RNText
         ref={ref}
-        className={cn("leading-none font-semibold text-foreground", className)}
+        className={cn("font-sans leading-none font-semibold text-foreground", className)}
         {...props}
       >
         {children}
@@ -123,7 +123,7 @@ export const CardDescription = forwardRef<RNText, CardDescriptionProps>(
     return (
       <RNText
         ref={ref}
-        className={cn("text-muted-foreground text-sm", className)}
+        className={cn("font-sans text-muted-foreground text-sm", className)}
         {...props}
       >
         {children}

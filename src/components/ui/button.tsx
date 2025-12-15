@@ -185,6 +185,7 @@ export const Button = forwardRef<View, ButtonProps>(
         return (
           <RNText
             className={cn(
+              "font-sans",
               sizeStyles.text,
               variantStyles.text
             )}

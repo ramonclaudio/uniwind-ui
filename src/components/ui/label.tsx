@@ -34,7 +34,7 @@ export const Label = forwardRef<RNText, LabelProps>(
         ref={ref}
         selectable={false}
         className={cn(
-          "text-sm leading-none font-medium text-foreground",
+          "font-sans text-sm leading-none font-medium text-foreground",
           className
         )}
         {...props}

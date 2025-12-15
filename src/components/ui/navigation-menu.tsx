@@ -418,7 +418,7 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
                 "active:bg-accent"
               )}
             >
-              <RNText className="text-sm text-foreground">{overflowLabel}</RNText>
+              <RNText className="font-sans text-sm text-foreground">{overflowLabel}</RNText>
               <ChevronIcon direction={isOverflowActive ? "up" : "down"} size={12} />
             </Pressable>
 
@@ -535,7 +535,7 @@ const OverflowSubmenu = ({ label, value, children }: OverflowSubmenuProps) => {
         )}
       >
         {typeof label === "string" ? (
-          <RNText className="text-sm text-popover-foreground">{label}</RNText>
+          <RNText className="font-sans text-sm text-popover-foreground">{label}</RNText>
         ) : (
           label
         )}
@@ -660,7 +660,7 @@ export const NavigationMenuTrigger = forwardRef<View, NavigationMenuTriggerProps
         {...props}
       >
         {typeof children === "string" ? (
-          <RNText className="text-sm text-foreground">{children}</RNText>
+          <RNText className="font-sans text-sm text-foreground">{children}</RNText>
         ) : (
           children
         )}
@@ -747,7 +747,7 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
 
     const renderContent = () => {
       if (typeof children === "string") {
-        return <RNText className="text-sm text-popover-foreground">{children}</RNText>;
+        return <RNText className="font-sans text-sm text-popover-foreground">{children}</RNText>;
       }
       return children;
     };
@@ -780,7 +780,7 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
     // Helper to style children with RNText for fonts
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
-        return <RNText className="text-sm text-popover-foreground">{child}</RNText>;
+        return <RNText className="font-sans text-sm text-popover-foreground">{child}</RNText>;
       }
       return child;
     };

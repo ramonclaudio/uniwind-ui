@@ -93,7 +93,7 @@ export const Badge = forwardRef<View, BadgeProps>(
       if (typeof child === "string") {
         return (
           <RNText
-            className={cn("text-xs", variantStyles.text)}
+            className={cn("font-sans text-xs", variantStyles.text)}
           >
             {child}
           </RNText>
