@@ -19,13 +19,9 @@ import {
   ComponentNote,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function SelectPage() {
-  const component = useComponent("select");
   const [fruit, setFruit] = useState("");
   const [labelFruit, setLabelFruit] = useState("");
   const [scrollableFruit, setScrollableFruit] = useState("");
@@ -33,7 +29,8 @@ export default function SelectPage() {
   return (
     <DocsPage>
       <ComponentHeader
-        component={component}
+        name="Select"
+        description="Displays a list of options for the user to pick from—triggered by a button."
         links={[
           { label: "Docs", url: "https://www.radix-ui.com/docs/primitives/components/select" },
           { label: "API Reference", url: "https://www.radix-ui.com/docs/primitives/components/select#api-reference" },
@@ -87,8 +84,6 @@ export function SelectDemo() {
           </SelectContent>
         </Select>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import {
@@ -309,8 +304,6 @@ export function SelectDisabled() {
       <ComponentNote>
         This component uses react-native-dropdown-picker for consistent behavior across web, iOS, and Android with full dark mode support. The dropdown anchors below the trigger and all styling is theme-aware.
       </ComponentNote>
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

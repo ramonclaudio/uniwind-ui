@@ -10,10 +10,7 @@ import {
   ComponentUsage,
   ComponentApiReference,
   ComponentNote,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 function CheckboxCard() {
   const [checked, setChecked] = useState<CheckedState>(true);
@@ -43,11 +40,12 @@ function CheckboxCard() {
 }
 
 export default function CheckboxPage() {
-  const component = useComponent("checkbox");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Checkbox"
+        description="A control that allows the user to toggle between checked and not checked."
+      />
 
       <ComponentDemo
         code={`import { View, Pressable } from "react-native"
@@ -140,8 +138,6 @@ export function CheckboxDemo() {
         </View>
       </ComponentDemo>
 
-      <Installation component={component} />
-
       <ComponentUsage
         import={`import { Checkbox } from "@/components/ui/checkbox"`}
         usage={`<Checkbox />`}
@@ -167,8 +163,6 @@ export function CheckboxDemo() {
       <ComponentNote>
         The Text component from @/components/ui/text is recommended for consistent styling, but React Native's built-in Text component works as a fallback.
       </ComponentNote>
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

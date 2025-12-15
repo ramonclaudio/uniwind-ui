@@ -12,17 +12,15 @@ import {
   ComponentNote,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function TextareaPage() {
-  const component = useComponent("textarea");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Textarea"
+        description="Displays a form textarea or a component that looks like a textarea."
+      />
 
       <ComponentDemo
         code={`import { Textarea } from "@/components/ui/textarea"
@@ -33,8 +31,6 @@ export function TextareaDemo() {
       >
         <Textarea placeholder="Type your message here." />
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import { Textarea } from "@/components/ui/textarea"`}
@@ -156,8 +152,6 @@ export function TextareaWithButton() {
       <ComponentNote>
         Textarea extends React Native{"'"}s TextInput with multiline enabled by default and consistent styling. Use the className prop to adjust height (e.g., min-h-[120px]).
       </ComponentNote>
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

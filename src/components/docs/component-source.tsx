@@ -3,7 +3,6 @@ import { Text } from "@/components/ui/text";
 import { useState } from "react";
 import * as Clipboard from "expo-clipboard";
 import { cn } from "@/lib/utils";
-import type { RegistryItem } from "@/lib/registry";
 
 interface ComponentSourceProps {
   code: string;
@@ -31,7 +30,6 @@ export function ComponentSource({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // For collapsible, show only first few lines when collapsed
   const lines = code.split("\n");
   const previewLines = 10;
   const shouldCollapse = collapsible && lines.length > previewLines;
@@ -46,7 +44,6 @@ export function ComponentSource({
         className
       )}
     >
-      {/* Code area */}
       <View className="bg-code">
         <ScrollView
           horizontal
@@ -54,7 +51,6 @@ export function ComponentSource({
           contentContainerStyle={{ minWidth: "100%" }}
         >
           <View className="flex-row py-4">
-            {/* Line numbers */}
             {showLineNumbers && (
               <View className="pl-4 pr-6">
                 {displayLines.map((_, index) => (
@@ -68,7 +64,6 @@ export function ComponentSource({
                 ))}
               </View>
             )}
-            {/* Code content */}
             <View className="pr-4 flex-1">
               {displayLines.map((line, index) => (
                 <Text
@@ -82,7 +77,6 @@ export function ComponentSource({
           </View>
         </ScrollView>
 
-        {/* Expand/Collapse gradient overlay */}
         {shouldCollapse && !expanded && (
           <View
             className="absolute bottom-0 left-0 right-0 h-20 bg-code"
@@ -91,7 +85,6 @@ export function ComponentSource({
         )}
       </View>
 
-      {/* Expand/Collapse button */}
       {shouldCollapse && (
         <Pressable
           onPress={() => setExpanded(!expanded)}
@@ -103,7 +96,6 @@ export function ComponentSource({
         </Pressable>
       )}
 
-      {/* Copy button - floating */}
       <Pressable
         onPress={handleCopy}
         className="absolute top-3 right-3 px-3 py-1.5 rounded-md bg-muted active:opacity-80"
@@ -116,50 +108,30 @@ export function ComponentSource({
   );
 }
 
-// Simple syntax highlighting for JSX/TSX using theme-aware colors
 function renderSyntaxHighlightedLine(line: string): React.ReactNode {
-  // Keywords
   const keywords = ["import", "export", "from", "const", "let", "var", "function", "return", "if", "else", "default"];
-  // Simple token-based highlighting
   const parts: React.ReactNode[] = [];
   let remaining = line;
   let key = 0;
 
-  // Match patterns in order - colors matched to shadcn/GitHub theme
   const patterns: { regex: RegExp; className: string }[] = [
-    // Strings - dark blue in light, teal in dark
     { regex: /^"[^"]*"/, className: "text-syntax-string" },
-    // Strings (single quotes)
     { regex: /^'[^']*'/, className: "text-syntax-string" },
-    // Strings (backticks)
     { regex: /^`[^`]*`/, className: "text-syntax-string" },
-    // Comments
     { regex: /^\/\/.*$/, className: "text-syntax-comment" },
     { regex: /^\/\*[\s\S]*?\*\//, className: "text-syntax-comment" },
-    // JSX tags (PascalCase components) - green in light, cyan in dark
     { regex: /^<\/?[A-Z][a-zA-Z]*/, className: "text-syntax-tag" },
-    // JSX tags (lowercase HTML elements)
     { regex: /^<\/?[a-z][a-zA-Z]*/, className: "text-syntax-tag" },
-    // Closing bracket
     { regex: /^\/>/, className: "text-code-foreground" },
     { regex: /^>/, className: "text-code-foreground" },
-    // Props/attributes - blue in light, purple in dark
     { regex: /^[a-zA-Z_][a-zA-Z0-9_]*(?==)/, className: "text-syntax-attr" },
-    // Keywords - purple in light, coral in dark
     { regex: new RegExp(`^(${keywords.join("|")})(?![a-zA-Z0-9_])`), className: "text-syntax-keyword" },
-    // Numbers
     { regex: /^[0-9]+(\.[0-9]+)?/, className: "text-syntax-number" },
-    // Braces and brackets
     { regex: /^[{}[\]()]/, className: "text-code-foreground" },
-    // Equals sign - orange/coral
     { regex: /^=/, className: "text-syntax-operator" },
-    // Identifiers
     { regex: /^[a-zA-Z_][a-zA-Z0-9_]*/, className: "text-code-foreground" },
-    // Other punctuation
     { regex: /^[,;:.]/, className: "text-code-foreground" },
-    // Whitespace
     { regex: /^\s+/, className: "text-code-foreground" },
-    // Anything else
     { regex: /^./, className: "text-code-foreground" },
   ];
 
@@ -179,7 +151,6 @@ function renderSyntaxHighlightedLine(line: string): React.ReactNode {
       }
     }
     if (!matched) {
-      // Fallback: consume one character
       parts.push(
         <Text key={key++} className="text-code-foreground">
           {remaining[0]}
@@ -193,7 +164,6 @@ function renderSyntaxHighlightedLine(line: string): React.ReactNode {
 }
 
 interface InstallationProps {
-  component?: RegistryItem;
   dependencies?: string[];
   className?: string;
 }
@@ -207,8 +177,8 @@ const packageManagerCommands: Record<PackageManager, string> = {
   bun: "bun add",
 };
 
-export function Installation({ component, dependencies, className }: InstallationProps) {
-  const deps = dependencies ?? component?.dependencies ?? [];
+export function Installation({ dependencies, className }: InstallationProps) {
+  const deps = dependencies ?? [];
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<"cli" | "manual">("cli");
   const [packageManager, setPackageManager] = useState<PackageManager>("pnpm");
@@ -230,7 +200,6 @@ export function Installation({ component, dependencies, className }: Installatio
         Installation
       </Text>
 
-      {/* CLI / Manual tabs */}
       <View className="flex-row border-b border-border">
         <Pressable
           onPress={() => setActiveTab("cli")}
@@ -268,7 +237,6 @@ export function Installation({ component, dependencies, className }: Installatio
 
       {activeTab === "cli" && deps.length > 0 && (
         <View className="rounded-lg border border-border overflow-hidden">
-          {/* Package manager selector */}
           <View className="flex-row items-center bg-muted p-1.5 border-b border-border">
             {(["pnpm", "npm", "yarn", "bun"] as PackageManager[]).map((pm) => (
               <Pressable
@@ -293,7 +261,6 @@ export function Installation({ component, dependencies, className }: Installatio
             ))}
           </View>
 
-          {/* Command code block */}
           <View className="bg-code p-4 flex-row items-center justify-between">
             <Text className="text-sm text-code-foreground">{command}</Text>
             <Pressable

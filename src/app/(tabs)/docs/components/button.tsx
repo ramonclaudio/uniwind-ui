@@ -11,17 +11,15 @@ import {
   ComponentNote,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function ButtonPage() {
-  const component = useComponent("button");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Button"
+        description="Displays a button or a component that looks like a button."
+      />
 
       <ComponentDemo
         code={`import { View } from "react-native"
@@ -46,8 +44,6 @@ export function ButtonDemo() {
           </Button>
         </View>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import { Button } from "@/components/ui/button"`}
@@ -291,8 +287,6 @@ export function ButtonAsChild() {
       <ComponentNote>
         The Button component uses Pressable under the hood with built-in press feedback. It supports a loading prop that displays an ActivityIndicator and disables interaction.
       </ComponentNote>
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

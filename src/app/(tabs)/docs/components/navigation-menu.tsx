@@ -17,18 +17,14 @@ import {
   ComponentPreview,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function NavigationMenuPage() {
-  const component = useComponent("navigation-menu");
-
   return (
     <DocsPage>
       <ComponentHeader
-        component={component}
+        name="Navigation Menu"
+        description="A collection of links for navigating websites."
         links={[
           { label: "Docs", url: "https://www.radix-ui.com/docs/primitives/components/navigation-menu" },
           { label: "API Reference", url: "https://www.radix-ui.com/docs/primitives/components/navigation-menu#api-reference" },
@@ -110,8 +106,6 @@ export default function NavigationMenuPage() {
         </Text>
       </View>
 
-      <Installation component={component} />
-
       <ComponentUsage
         import={`import {
   NavigationMenu,
@@ -178,7 +172,6 @@ export function NavigationMenuDemo() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        {/* Direct link items */}
         <NavigationMenuItem>
           <NavigationMenuLink href="/docs">
             Documentation
@@ -212,8 +205,6 @@ export function NavigationMenuDemo() {
       <ComponentNote>
         This component includes built-in responsive collapse behavior. As the screen gets smaller, menu items progressively collapse into a {'"'}More{'"'} overflow menu, with a minimum of 1 visible item. Set responsive={"{"}false{"}"} to disable this behavior.
       </ComponentNote>
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

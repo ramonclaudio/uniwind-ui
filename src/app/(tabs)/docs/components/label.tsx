@@ -9,17 +9,15 @@ import {
   ComponentSection,
   ComponentExample,
   ComponentUsage,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function LabelPage() {
-  const component = useComponent("label");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Label"
+        description="Renders an accessible label associated with controls."
+      />
 
       <ComponentDemo
         code={`import { View } from "react-native"
@@ -40,8 +38,6 @@ export function LabelDemo() {
           <Label>Accept terms and conditions</Label>
         </View>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import { Label } from "@/components/ui/label"`}
@@ -103,8 +99,6 @@ export function LabelStyled() {
           </View>
         </ComponentExample>
       </ComponentSection>
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

@@ -12,17 +12,15 @@ import {
   ComponentExample,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function BadgePage() {
-  const component = useComponent("badge");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Badge"
+        description="Displays a badge or a component that looks like a badge."
+      />
 
       <ComponentDemo
         code={`import { View, Text } from "react-native"
@@ -93,8 +91,6 @@ export function BadgeDemo() {
           </View>
         </View>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import { Badge } from "@/components/ui/badge"`}
@@ -205,8 +201,6 @@ export function BadgeWithSpinner() {
           { name: "asChild", type: "boolean", default: "false", description: "Render as child element, passing badge styles to it" },
         ]}
       />
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

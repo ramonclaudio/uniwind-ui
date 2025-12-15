@@ -19,17 +19,15 @@ import {
   ComponentSection,
   ComponentExample,
   ComponentUsage,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function CardPage() {
-  const component = useComponent("card");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Card"
+        description="Displays a card with header, content, and footer."
+      />
 
       <ComponentDemo
         code={`import { View, Pressable } from "react-native"
@@ -125,8 +123,6 @@ export function CardDemo() {
           </CardFooter>
         </Card>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import {
@@ -234,8 +230,6 @@ export function SubscribeCard() {
           </Card>
         </ComponentExample>
       </ComponentSection>
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

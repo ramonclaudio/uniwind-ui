@@ -11,17 +11,15 @@ import {
   ComponentNote,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function InputPage() {
-  const component = useComponent("input");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Input"
+        description="Displays a form input field or a component that looks like an input field."
+      />
 
       <ComponentDemo
         code={`import { View } from "react-native"
@@ -39,8 +37,6 @@ export function InputDemo() {
           <Input placeholder="Email" />
         </View>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import { Input } from "@/components/ui/input"`}
@@ -158,8 +154,6 @@ export function InputPassword() {
       <ComponentNote>
         Input extends React Native{"'"}s TextInput with consistent styling. Use editable={"{"}false{"}"} for disabled state and secureTextEntry for password fields.
       </ComponentNote>
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

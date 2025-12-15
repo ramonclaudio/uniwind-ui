@@ -9,17 +9,15 @@ import {
   ComponentExample,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function SeparatorPage() {
-  const component = useComponent("separator");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Separator"
+        description="Visually or semantically separates content."
+      />
 
       <ComponentDemo
         code={`import { View, Text } from "react-native"
@@ -67,8 +65,6 @@ export function SeparatorDemo() {
           </View>
         </View>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import { Separator } from "@/components/ui/separator"`}
@@ -122,8 +118,6 @@ export function SeparatorInList() {
           { name: "orientation", type: '"horizontal" | "vertical"', default: '"horizontal"' },
         ]}
       />
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

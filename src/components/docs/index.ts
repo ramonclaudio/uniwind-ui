@@ -6,6 +6,5 @@ export { ComponentNote } from "./component-note";
 export { ComponentPreview, ComponentPreviewTabs } from "./component-preview";
 export { ComponentSection } from "./component-section";
 export { ComponentSource, Installation } from "./component-source";
-export { ComponentSourceSection } from "./component-source-section";
 export { ComponentUsage } from "./component-usage";
 export { DocsPage } from "./docs-page";

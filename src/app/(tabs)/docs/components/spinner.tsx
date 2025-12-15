@@ -11,17 +11,15 @@ import {
   ComponentNote,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function SpinnerPage() {
-  const component = useComponent("spinner");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Spinner"
+        description="Displays a loading spinner indicator."
+      />
 
       <ComponentDemo
         code={`import { Spinner } from "@/components/ui/spinner"
@@ -38,8 +36,6 @@ export default function SpinnerBasic() {
           <Spinner />
         </View>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import { Spinner } from "@/components/ui/spinner"`}
@@ -190,8 +186,6 @@ export default function SpinnerBadge() {
           { name: "size", type: '"small" | "large"', default: '"small"' },
         ]}
       />
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }

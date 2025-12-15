@@ -8,18 +8,16 @@ import {
   ComponentExample,
   ComponentUsage,
   ComponentApiReference,
-  ComponentSourceSection,
   ComponentNote,
-  Installation,
 } from "@/components/docs";
-import { useComponent } from "@/lib/registry";
 
 export default function TextPage() {
-  const component = useComponent("text");
-
   return (
     <DocsPage>
-      <ComponentHeader component={component} />
+      <ComponentHeader
+        name="Text"
+        description="A foundational text component with typography variants and font style support."
+      />
 
       <ComponentDemo
         code={`import { View } from "react-native"
@@ -45,8 +43,6 @@ export function TextDemo() {
           <Text variant="muted">Muted secondary information.</Text>
         </View>
       </ComponentDemo>
-
-      <Installation component={component} />
 
       <ComponentUsage
         import={`import { Text } from "@/components/ui/text"`}
@@ -221,8 +217,6 @@ export const FONTS = {
           { name: "className", type: "string", default: '""', description: "Tailwind/Uniwind classes for styling" },
         ]}
       />
-
-      <ComponentSourceSection component={component} />
     </DocsPage>
   );
 }
