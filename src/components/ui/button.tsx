@@ -7,7 +7,6 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
- * - @/lib/fonts (font configuration)
  * - uniwind (for useCSSVariable)
  *
  * ## Usage
@@ -35,7 +34,6 @@ import {
   Pressable,
   Text as RNText,
   View as RNView,
-  Platform,
   ActivityIndicator,
   type PressableProps,
   type View,
@@ -49,7 +47,6 @@ import {
   Children,
 } from "react";
 import { cn } from "@/lib/utils";
-import { FONTS, FONT_CLASSES } from "@/lib/fonts";
 import { useCSSVariable, useResolveClassNames } from "uniwind";
 
 // Mapping from button variant to CSS variable for icon colors
@@ -183,22 +180,14 @@ export const Button = forwardRef<View, ButtonProps>(
       );
     };
 
-    // On native (iOS/Android), we need inline fontFamily for Expo Go compatibility
-    const platformTextStyle = Platform.select({
-      web: undefined,
-      default: { fontFamily: FONTS.regular },
-    });
-
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
         return (
           <RNText
             className={cn(
-              FONT_CLASSES.regular,
               sizeStyles.text,
               variantStyles.text
             )}
-            style={platformTextStyle}
           >
             {child}
           </RNText>

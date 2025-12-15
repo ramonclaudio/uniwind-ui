@@ -7,7 +7,6 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
- * - @/lib/fonts (font configuration)
  *
  * ## Usage
  *
@@ -32,14 +31,12 @@ import {
   View,
   Text as RNText,
   Pressable,
-  Platform,
   ActivityIndicator,
   type ViewProps,
   type PressableProps,
 } from "react-native";
 import { forwardRef, isValidElement, cloneElement, Children, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { FONTS, FONT_CLASSES } from "@/lib/fonts";
 
 export const badgeVariants = {
   default: {
@@ -92,18 +89,11 @@ export const Badge = forwardRef<View, BadgeProps>(
       className
     );
 
-    // On native (iOS/Android), we need inline fontFamily for Expo Go compatibility
-    const platformTextStyle = Platform.select({
-      web: undefined,
-      default: { fontFamily: FONTS.regular },
-    });
-
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
         return (
           <RNText
-            className={cn(FONT_CLASSES.regular, "text-xs", variantStyles.text)}
-            style={platformTextStyle}
+            className={cn("text-xs", variantStyles.text)}
           >
             {child}
           </RNText>
