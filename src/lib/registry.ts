@@ -910,7 +910,7 @@ export { Spinner };`,
 
   select: {
     name: "Select",
-    description: "Displays a list of options for the user to pick from—triggered by a button.",
+    description: "Displays a list of options for the user to pick from, triggered by a button.",
     dependencies: ["react-native-dropdown-picker"],
     registryDependencies: ["utils"],
     files: [

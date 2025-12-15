@@ -1000,8 +1000,8 @@ export default function HomePage() {
               </Text>
 
               <Text className="text-sm md:text-base text-muted-foreground/60 text-center mb-10 max-w-xl">
-                A 1:1 port of shadcn/ui components. Build-time compiled styles.
-                iOS, Android, and Web from one codebase.
+                Built on Uniwind. Styles precomputed at build time, 2.5x faster.
+                iOS, Android, Web.
               </Text>
 
               <View className="flex-row flex-wrap justify-center items-start gap-3">

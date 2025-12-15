@@ -49,7 +49,7 @@ Additional dependencies:
 
 ## Why Uniwind
 
-[Uniwind](https://uniwind.dev/) is from the creators of Unistyles. It's the fastest Tailwind implementation for React Native, 2x faster than alternatives. Styles are precomputed at build time. Zero runtime cost.
+[Uniwind](https://uniwind.dev/) is from the creators of Unistyles. It's the fastest Tailwind implementation for React Native, 2.5x faster than alternatives. Styles are precomputed at build time. Zero runtime cost.
 
 If you know Tailwind, you know Uniwind. Same classNames, native performance.
 

@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Uniwind UI",
-  url: "https://github.com/ramonclaudio/uniwind-ui",
+  url: "https://uniwind-ui.vercel.app",
   description:
     "shadcn/ui compatible components for React Native. Built on Uniwind. Copy and paste into your apps.",
   links: {

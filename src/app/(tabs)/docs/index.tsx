@@ -42,8 +42,8 @@ export default function DocsIndex() {
         </Text>
 
         <Text className="text-lg text-muted-foreground leading-relaxed">
-          A 1:1 port of shadcn/ui built on Uniwind. Beautiful, accessible
-          components running natively on iOS, Android, and Web.
+          shadcn/ui components for React Native, built on Uniwind. Copy, paste,
+          and own. iOS, Android, Web.
         </Text>
       </View>
 
@@ -113,19 +113,19 @@ export default function DocsIndex() {
         <View className="gap-2">
           <Text className="text-muted-foreground leading-relaxed">
             <Text bold className="text-foreground">2.5x faster </Text>
-            — styles precomputed at build time, zero runtime cost
+            - styles precomputed at build time, zero runtime cost
           </Text>
           <Text className="text-muted-foreground leading-relaxed">
             <Text bold className="text-foreground">Tailwind 4 </Text>
-            — CSS variables, media queries, custom utilities
+            - CSS variables, media queries, custom utilities
           </Text>
           <Text className="text-muted-foreground leading-relaxed">
             <Text bold className="text-foreground">TypeScript </Text>
-            — full autocomplete for utilities, variants, and tokens
+            - full autocomplete for utilities, variants, and tokens
           </Text>
           <Text className="text-muted-foreground leading-relaxed">
             <Text bold className="text-foreground">Platform variants </Text>
-            — ios: and android: directly in className
+            - ios: and android: directly in className
           </Text>
         </View>
       </View>
