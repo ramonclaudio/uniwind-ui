@@ -1,12 +1,26 @@
 {
   "expo": {
-    "scheme": "acme",
+    "scheme": "uniwind-ui",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
     "web": {
       "output": "static"
     },
-    "name": "expo-starter-uniwind",
-    "slug": "expo-starter-uniwind"
+    "name": "Uniwind UI",
+    "slug": "uniwind-ui",
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/SpaceMono-Regular.ttf",
+            "./assets/fonts/SpaceMono-Bold.ttf",
+            "./assets/fonts/SpaceMono-Italic.ttf",
+            "./assets/fonts/SpaceMono-BoldItalic.ttf"
+          ]
+        }
+      ],
+      "expo-router"
+    ]
   }
 }
