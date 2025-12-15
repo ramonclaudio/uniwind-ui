@@ -1000,22 +1000,16 @@ export default function HomePage() {
               </Text>
 
               <Text className="text-sm md:text-base text-muted-foreground/60 text-center mb-10 max-w-xl">
-                Built on Uniwind. Styles precomputed at build time, 2.5x faster.
+                Built on Uniwind. Styles precomputed at build time, 2.5x faster than alternatives.
                 iOS, Android, Web.
               </Text>
 
-              <View className="flex-row flex-wrap justify-center items-start gap-3">
-                <Link href="/docs" asChild>
-                  <Button size="lg" className="px-8">
-                    <Text className="text-primary-foreground">Get Started</Text>
-                  </Button>
+              <Button size="lg" asChild>
+                <Link href="/docs/components">
+                  <Text className="text-primary-foreground">Browse Components</Text>
+                  <Ionicons name="arrow-forward" size={16} className="text-primary-foreground ml-1" />
                 </Link>
-                <Link href="/docs/components" asChild>
-                  <Button variant="outline" size="lg" className="px-8">
-                    <Text className="text-foreground">Components</Text>
-                  </Button>
-                </Link>
-              </View>
+              </Button>
             </View>
           </View>
         </View>
