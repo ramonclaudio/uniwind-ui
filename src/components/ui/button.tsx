@@ -236,7 +236,7 @@ export const Button = forwardRef<View, ButtonProps>(
       // Wrap children in a View to ensure flex layout works regardless of the
       // parent element (e.g., Link on web doesn't always support flex properly)
       const wrappedChildren = childProps.children ? (
-        <RNView className="flex-row items-center justify-center gap-2">
+        <RNView className="flex-1 h-full flex-row items-center justify-center gap-2">
           {loading && <Spinner className={variantStyles.text} />}
           {Children.map(childProps.children, styledChildren)}
         </RNView>
