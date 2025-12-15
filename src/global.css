@@ -1,2 +1,353 @@
 @import "tailwindcss";
 @import "uniwind";
+
+/*
+  Static theme variables for JavaScript access via useCSSVariable()
+  These are always available even if not used in className props
+  Useful for third-party libraries (charts, maps, etc.)
+*/
+@theme static {
+  /* Chart configuration */
+  --chart-line-width: 2;
+  --chart-dot-radius: 4;
+  --chart-grid-opacity: 0.1;
+
+  /* Animation durations (in ms) */
+  --duration-fast: 150;
+  --duration-normal: 300;
+  --duration-slow: 500;
+
+  /* Touch targets (in px) */
+  --touch-target-min: 44;
+  --touch-target-comfortable: 48;
+
+  /* Z-index scale */
+  --z-dropdown: 1000;
+  --z-modal: 2000;
+  --z-tooltip: 3000;
+  --z-toast: 4000;
+}
+
+/*
+  shadcn/ui theming convention adapted for Uniwind
+  Uses the background/foreground naming convention
+  The background suffix is omitted when used for background color
+
+  Uniwind uses @variant light/dark inside @layer theme instead of :root/.dark
+*/
+
+@theme {
+  /* Font families - names must match font file names exactly (without extension) */
+  --font-sans: 'SpaceMono-Regular';
+  --font-sans-bold: 'SpaceMono-Bold';
+  --font-sans-italic: 'SpaceMono-Italic';
+  --font-sans-bold-italic: 'SpaceMono-BoldItalic';
+  --font-mono: 'SpaceMono-Regular';
+}
+
+@layer theme {
+  :root {
+    /* Web-specific font fallbacks */
+    @media web {
+      --font-sans: "SpaceMono-Regular", "ui-monospace", "monospace";
+      --font-sans-bold: "SpaceMono-Bold", "ui-monospace", "monospace";
+      --font-mono: "SpaceMono-Regular", "ui-monospace", "monospace";
+    }
+
+    /* Platform-specific spacing - iOS prefers generous spacing, Android follows Material Design */
+    @media ios {
+      --spacing-safe-top: 20px;
+      --spacing-safe-bottom: 34px;
+      --text-base: 17px;
+    }
+
+    @media android {
+      --spacing-safe-top: 24px;
+      --spacing-safe-bottom: 16px;
+      --text-base: 14px;
+    }
+
+    @media web {
+      --spacing-safe-top: 0px;
+      --spacing-safe-bottom: 0px;
+      --text-base: 16px;
+    }
+
+    /* Light theme variables */
+    @variant light {
+      --color-background: oklch(1 0 0);
+      --color-foreground: oklch(0.145 0 0);
+      --color-card: oklch(1 0 0);
+      --color-card-foreground: oklch(0.145 0 0);
+      --color-popover: oklch(1 0 0);
+      --color-popover-foreground: oklch(0.145 0 0);
+      --color-primary: oklch(0.205 0 0);
+      --color-primary-foreground: oklch(0.985 0 0);
+      --color-secondary: oklch(0.97 0 0);
+      --color-secondary-foreground: oklch(0.205 0 0);
+      --color-muted: oklch(0.97 0 0);
+      --color-muted-foreground: oklch(0.556 0 0);
+      --color-accent: oklch(0.97 0 0);
+      --color-accent-foreground: oklch(0.205 0 0);
+      --color-destructive: oklch(0.577 0.245 27.325);
+      --color-destructive-foreground: oklch(0.985 0 0);
+      --color-border: oklch(0.922 0 0);
+      --color-input: oklch(0.922 0 0);
+      --color-ring: oklch(0.708 0 0);
+      /* Sidebar colors */
+      --color-sidebar: oklch(0.985 0 0);
+      --color-sidebar-foreground: oklch(0.145 0 0);
+      --color-sidebar-primary: oklch(0.205 0 0);
+      --color-sidebar-primary-foreground: oklch(0.985 0 0);
+      --color-sidebar-accent: oklch(0.97 0 0);
+      --color-sidebar-accent-foreground: oklch(0.205 0 0);
+      --color-sidebar-border: oklch(0.922 0 0);
+      --color-sidebar-ring: oklch(0.708 0 0);
+      /* Surface colors */
+      --color-surface: oklch(0.98 0 0);
+      --color-surface-foreground: oklch(0.145 0 0);
+      /* Selection colors */
+      --color-selection: oklch(0.97 0 0);
+      --color-selection-foreground: oklch(0.145 0 0);
+      /* Info/Blue colors - matches Tailwind blue palette */
+      --color-info: oklch(0.546 0.245 262.881);
+      --color-info-foreground: oklch(0.985 0 0);
+      --color-info-muted: oklch(0.97 0.014 254.604);
+      --color-info-border: oklch(0.546 0.245 262.881);
+      /* Success/Green colors - matches Tailwind green palette */
+      --color-success: oklch(0.627 0.194 149.214);
+      --color-success-foreground: oklch(0.985 0 0);
+      /* Warning/Amber colors - matches Tailwind amber palette */
+      --color-warning: oklch(0.769 0.188 70.08);
+      --color-warning-foreground: oklch(0.145 0 0);
+      /* Code block colors - matches shadcn surface pattern */
+      --color-code: var(--color-surface);
+      --color-code-foreground: var(--color-surface-foreground);
+      --color-code-highlight: oklch(0.96 0 0);
+      --color-code-number: oklch(0.56 0 0);
+      /* Syntax highlighting colors - GitHub light theme */
+      --color-syntax-string: #0a3069;
+      --color-syntax-comment: #6e7781;
+      --color-syntax-tag: #116329;
+      --color-syntax-attr: #0550ae;
+      --color-syntax-keyword: #8250df;
+      --color-syntax-number: #0550ae;
+      --color-syntax-operator: #cf222e;
+    }
+
+    /* Dark theme variables */
+    @variant dark {
+      --color-background: oklch(0.145 0 0);
+      --color-foreground: oklch(0.985 0 0);
+      --color-card: oklch(0.205 0 0);
+      --color-card-foreground: oklch(0.985 0 0);
+      --color-popover: oklch(0.269 0 0);
+      --color-popover-foreground: oklch(0.985 0 0);
+      --color-primary: oklch(0.922 0 0);
+      --color-primary-foreground: oklch(0.205 0 0);
+      --color-secondary: oklch(0.269 0 0);
+      --color-secondary-foreground: oklch(0.985 0 0);
+      --color-muted: oklch(0.269 0 0);
+      --color-muted-foreground: oklch(0.708 0 0);
+      --color-accent: oklch(0.371 0 0);
+      --color-accent-foreground: oklch(0.985 0 0);
+      --color-destructive: oklch(0.704 0.191 22.216);
+      --color-destructive-foreground: oklch(0.985 0 0);
+      --color-border: oklch(1 0 0 / 10%);
+      --color-input: oklch(1 0 0 / 15%);
+      --color-ring: oklch(0.439 0 0);
+      /* Sidebar colors */
+      --color-sidebar: oklch(0.205 0 0);
+      --color-sidebar-foreground: oklch(0.985 0 0);
+      --color-sidebar-primary: oklch(0.488 0.243 264.376);
+      --color-sidebar-primary-foreground: oklch(0.985 0 0);
+      --color-sidebar-accent: oklch(0.269 0 0);
+      --color-sidebar-accent-foreground: oklch(0.985 0 0);
+      --color-sidebar-border: oklch(0.269 0 0);
+      --color-sidebar-ring: oklch(0.439 0 0);
+      /* Surface colors */
+      --color-surface: oklch(0.2 0 0);
+      --color-surface-foreground: oklch(0.708 0 0);
+      /* Selection colors */
+      --color-selection: oklch(0.269 0 0);
+      --color-selection-foreground: oklch(0.985 0 0);
+      /* Info/Blue colors - matches Tailwind blue palette */
+      /* Dark: checkbox=blue-600 (same as light), container-bg=blue-950, container-border=blue-900 */
+      --color-info: oklch(0.546 0.245 262.881);
+      --color-info-foreground: oklch(0.985 0 0);
+      --color-info-muted: oklch(0.208 0.085 264.052);
+      --color-info-border: oklch(0.321 0.137 263.359);
+      /* Success/Green colors - matches Tailwind green palette */
+      --color-success: oklch(0.723 0.219 149.579);
+      --color-success-foreground: oklch(0.145 0 0);
+      /* Warning/Amber colors - matches Tailwind amber palette */
+      --color-warning: oklch(0.828 0.189 84.575);
+      --color-warning-foreground: oklch(0.145 0 0);
+      /* Code block colors - matches shadcn surface pattern */
+      --color-code: var(--color-surface);
+      --color-code-foreground: var(--color-surface-foreground);
+      --color-code-highlight: oklch(0.27 0 0);
+      --color-code-number: oklch(0.72 0 0);
+      /* Syntax highlighting colors - GitHub dark theme */
+      --color-syntax-string: #a5d6ff;
+      --color-syntax-comment: #8b949e;
+      --color-syntax-tag: #79c0ff;
+      --color-syntax-attr: #d2a8ff;
+      --color-syntax-keyword: #ff7b72;
+      --color-syntax-number: #79c0ff;
+      --color-syntax-operator: #ff7b72;
+    }
+  }
+}
+
+/*
+  Define radius and spacing values in @theme for Tailwind utility generation
+  These are not theme-dependent so they go directly in @theme
+*/
+@theme {
+  --radius-sm: calc(0.625rem - 4px);
+  --radius-md: calc(0.625rem - 2px);
+  --radius-lg: 0.625rem;
+  --radius-xl: calc(0.625rem + 4px);
+  /* Header and footer heights - matches shadcn-ui */
+  --spacing-header: 3.5rem;
+  --spacing-footer: 3.5rem;
+  /* Sidebar width */
+  --spacing-sidebar: 16rem;
+  /* Platform-aware safe area spacing (values defined in @layer theme with @media queries) */
+  --spacing-safe-top: var(--spacing-safe-top, 0px);
+  --spacing-safe-bottom: var(--spacing-safe-bottom, 0px);
+  /* Platform-aware text base size */
+  --text-base: var(--text-base, 16px);
+}
+
+/*
+  Custom utilities using Uniwind CSS functions
+  These provide device-specific values that adapt automatically
+*/
+@layer utilities {
+  /* Hairline borders - thinnest line the device can display */
+  .border-hairline {
+    border-width: hairlineWidth();
+  }
+  .h-hairline {
+    height: hairlineWidth();
+  }
+  .w-hairline {
+    width: hairlineWidth();
+  }
+
+  /* Font scale - respects device accessibility settings */
+  .text-scaled {
+    font-size: fontScale();
+  }
+  .text-scaled-sm {
+    font-size: calc(fontScale() * 0.875);
+  }
+  .text-scaled-lg {
+    font-size: calc(fontScale() * 1.125);
+  }
+
+  /* Pixel ratio - scales with device pixel density */
+  .w-pixel {
+    width: pixelRatio();
+  }
+  .h-pixel {
+    height: pixelRatio();
+  }
+  .size-icon {
+    width: calc(pixelRatio() * 24);
+    height: calc(pixelRatio() * 24);
+  }
+  .size-avatar {
+    width: calc(pixelRatio() * 40);
+    height: calc(pixelRatio() * 40);
+  }
+  .size-avatar-sm {
+    width: calc(pixelRatio() * 32);
+    height: calc(pixelRatio() * 32);
+  }
+  .size-avatar-lg {
+    width: calc(pixelRatio() * 48);
+    height: calc(pixelRatio() * 48);
+  }
+
+  /* Light-dark adaptive colors - automatically switches with theme */
+  .bg-adaptive {
+    background-color: light-dark(#ffffff, #1f2937);
+  }
+  .bg-adaptive-subtle {
+    background-color: light-dark(#f9fafb, #111827);
+  }
+  .text-adaptive {
+    color: light-dark(#111827, #f9fafb);
+  }
+  .text-adaptive-muted {
+    color: light-dark(#6b7280, #9ca3af);
+  }
+  .border-adaptive {
+    border-color: light-dark(#e5e7eb, #374151);
+  }
+
+  /* Container wrapper utility - matches shadcn-ui */
+  .container-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1400px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Container utility */
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1400px;
+    padding-left: 1rem;
+    padding-right: 2rem;
+  }
+
+  /* Border grid utility - uses border color for theme adaptability */
+  .border-grid {
+    border-color: var(--color-border);
+  }
+
+  /* Section soft gradient utility */
+  .section-soft {
+    background: linear-gradient(to bottom, var(--color-background), var(--color-surface));
+  }
+
+  /* No scrollbar utility (web-only - use showsVerticalScrollIndicator={false} on native) */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Extend touch target for mobile - use with negative margin and positive padding */
+  /* Note: React Native doesn't support ::before pseudo-elements. Use hitSlop prop instead. */
+  .extend-touch-target {
+    margin: -8px;
+    padding: 8px;
+  }
+
+  /* Card component pattern - example of component-scoped CSS */
+  .card-elevated {
+    background-color: light-dark(#ffffff, #1f2937);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-elevated-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: light-dark(#111827, #f9fafb);
+    margin-bottom: 8px;
+  }
+
+  .card-elevated-description {
+    font-size: 14px;
+    color: light-dark(#6b7280, #9ca3af);
+  }
+}
