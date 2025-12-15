@@ -4,39 +4,6 @@ A 1:1 port of [shadcn/ui](https://ui.shadcn.com/) for React Native, built on [Un
 
 Copy and paste into your apps. Open Source. MIT License.
 
-## Why Uniwind?
-
-[Uniwind](https://uniwind.dev/) is the fastest Tailwind CSS implementation for React Native, created by the team behind Unistyles.
-
-- **2.5x faster** than alternatives — styles are precomputed at build time
-- **Full Tailwind 4** support with CSS variables, media queries, and custom utilities
-- **TypeScript autocomplete** for all utilities, variants, and theme tokens
-- **Platform variants** (`ios:`, `android:`) directly in className strings
-- **Zero runtime cost** — no style computation on the device
-
-## What This Is
-
-**The problem:** [shadcn/ui](https://ui.shadcn.com/) provides beautifully designed components for React, but not for React Native.
-
-**The solution:** This repository provides the same shadcn/ui components, ported 1:1 for React Native using Uniwind's full API:
-
-- `className` prop for all styling
-- `useResolveClassNames()` for dynamic style resolution
-- `useCSSVariable()` for theme-aware colors
-- Uniwind-specific props like `placeholderTextColorClassName`
-
-## What This Is NOT
-
-- Not an npm package you install
-- Not affiliated with Uniwind or shadcn
-- Not a framework
-
-## Philosophy
-
-Inspired by [shadcn/ui](https://ui.shadcn.com/): copy the code, own it, modify it. No black-box dependencies.
-
-Works with any React Native framework — Expo, bare React Native, or whatever you prefer.
-
 ## Components
 
 | Component | Description |
@@ -47,52 +14,19 @@ Works with any React Native framework — Expo, bare React Native, or whatever y
 | Checkbox | Controlled/uncontrolled boolean input |
 | Input | Text input with theme integration |
 | Label | Form labels |
-| Navigation Menu | App navigation |
+| Navigation Menu | App navigation with responsive collapse |
 | Select | Dropdown picker with groups |
 | Separator | Visual dividers |
 | Spinner | Loading indicator |
 | Text | Theme-aware text with font variants |
 | Textarea | Multi-line text input |
 
-## Getting Started
+## Usage
 
-```sh
-# Clone the repo
-git clone https://github.com/ramonclaudio/uniwind-ui.git
-
-# Install dependencies
-npm install
-
-# Start the app
-npm start
-```
-
-## Requirements
-
-**Core (all components):**
-- React Native 0.76+
-- Uniwind 1.0+
-- Tailwind CSS 4+
-- clsx
-- tailwind-merge
-
-**Per-component optional dependencies:**
-| Component | Additional Dependencies |
-|-----------|------------------------|
-| Select | react-native-dropdown-picker |
-| Checkbox | Any icon library (default: @expo/vector-icons) |
-| NavigationMenu | Any icon library + router (default: @expo/vector-icons, expo-router) |
-
-Expo is **not required**. The documentation site uses Expo, but the components work with any React Native setup.
-
-## Using Components in Your Project
-
-1. Copy the component file from `src/components/ui/`
-2. Copy the `cn` utility from `src/lib/utils.ts`
-3. Ensure your project has Uniwind configured
+1. Browse components at [`src/components/ui/`](src/components/ui/)
+2. Copy the component file into your project
+3. Copy [`src/lib/utils.ts`](src/lib/utils.ts) (provides the `cn` utility)
 4. Import and use
-
-Example:
 
 ```tsx
 import { Button } from "@/components/ui/button";
@@ -102,49 +36,48 @@ import { Button } from "@/components/ui/button";
 </Button>
 ```
 
-## Project Structure
+## Requirements
 
-```
-src/
-├── components/
-│   ├── ui/           # The components (copy these)
-│   │   ├── badge.tsx
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── checkbox.tsx
-│   │   ├── input.tsx
-│   │   ├── label.tsx
-│   │   ├── navigation-menu.tsx
-│   │   ├── select.tsx
-│   │   ├── separator.tsx
-│   │   ├── spinner.tsx
-│   │   ├── text.tsx
-│   │   └── textarea.tsx
-│   └── ...           # Demo app components
-├── lib/
-│   ├── utils.ts      # cn() utility function
-│   └── ...
-└── app/              # Demo app (this documentation site)
-```
+Your project needs:
+- React Native 0.76+
+- Uniwind 1.0+
+- Tailwind CSS 4+
+- clsx
+- tailwind-merge
 
-## How Components Use Uniwind
+Some components have additional dependencies you can customize:
 
-| Component | Uniwind API Used |
-|-----------|-----------------|
-| Button | `useResolveClassNames()` for icon colors |
-| Select | `useCSSVariable()` for 12+ theme colors |
-| Input | `placeholderTextColorClassName`, `cursorColorClassName` |
-| All | `className` prop throughout |
+| Component | Default | Swap for |
+|-----------|---------|----------|
+| Select | react-native-dropdown-picker | - |
+| Checkbox | @expo/vector-icons | Any icon library |
+| NavigationMenu | @expo/vector-icons, expo-router | Any icon library, any router |
+
+## Why Uniwind?
+
+[Uniwind](https://uniwind.dev/) is the fastest Tailwind CSS implementation for React Native.
+
+- 2.5x faster than alternatives
+- Full Tailwind 4 support
+- TypeScript autocomplete
+- Platform variants (`ios:`, `android:`)
+- Zero runtime cost
+
+## Philosophy
+
+Inspired by [shadcn/ui](https://ui.shadcn.com/): copy the code, own it, modify it. No black-box dependencies.
+
+This is not an npm package. Not a framework. Just components you copy into your project.
 
 ## Links
 
-- [Uniwind Documentation](https://uniwind.dev/)
+- [Uniwind](https://uniwind.dev/)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
 ## Author
 
-Created by [Ray](https://x.com/ramonclaudio)
+[Ray](https://x.com/ramonclaudio)
 
 ## License
 
