@@ -26,6 +26,8 @@ import { useCSSVariable, useResolveClassNames } from "uniwind";
 
 export interface SpinnerProps extends Omit<ActivityIndicatorProps, "color"> {
   className?: string;
+  /** Optional color override - if provided, takes precedence over className */
+  color?: string;
 }
 
 /**
@@ -44,6 +46,7 @@ export interface SpinnerProps extends Omit<ActivityIndicatorProps, "color"> {
  */
 function Spinner({
   className,
+  color,
   size = "small",
   ...props
 }: SpinnerProps) {
@@ -51,7 +54,8 @@ function Spinner({
   const defaultColor = useCSSVariable("--color-foreground") as string;
   // Use useResolveClassNames only when custom className is provided
   const customStyles = useResolveClassNames(className || "");
-  const resolvedColor = (customStyles.color as string) || defaultColor;
+  // Priority: explicit color prop > className color > default foreground
+  const resolvedColor = color || (customStyles.color as string) || defaultColor;
 
   return (
     <ActivityIndicator

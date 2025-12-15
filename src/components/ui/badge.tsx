@@ -45,18 +45,22 @@ export const badgeVariants = {
   default: {
     container: "border-transparent bg-primary",
     text: "text-primary-foreground font-medium",
+    colorVar: "--color-primary-foreground",
   },
   secondary: {
     container: "border-transparent bg-secondary",
     text: "text-secondary-foreground font-medium",
+    colorVar: "--color-secondary-foreground",
   },
   destructive: {
     container: "border-transparent bg-destructive",
-    text: "text-white font-medium",
+    text: "text-destructive-foreground font-medium",
+    colorVar: "--color-destructive-foreground",
   },
   outline: {
     container: "border-border",
     text: "text-foreground font-medium",
+    colorVar: "--color-foreground",
   },
 } as const;
 
@@ -96,6 +100,9 @@ export const Badge = forwardRef<View, BadgeProps>(
     const fontFamily = useCSSVariable("--font-sans") as string;
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
+    // Resolve variant color from CSS variable for icons and spinners
+    const variantColor = useCSSVariable(variantStyles.colorVar) as string;
+
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
         return (
@@ -109,17 +116,38 @@ export const Badge = forwardRef<View, BadgeProps>(
       }
 
       if (isValidElement(child)) {
-        const childProps = child.props as { className?: string; children?: ReactNode };
+        const childProps = child.props as { className?: string; children?: ReactNode; color?: string };
+        const childType = child.type as { displayName?: string };
 
+        // Handle ActivityIndicator (native spinner) - pass color prop
         if (child.type === ActivityIndicator) {
+          return cloneElement(child as React.ReactElement<{ color?: string; className?: string }>, {
+            color: childProps.color || variantColor,
+            className: cn(variantStyles.text, childProps.className),
+          });
+        }
+
+        // Handle Spinner component - pass color prop
+        if (childType.displayName === "Spinner") {
+          return cloneElement(child as React.ReactElement<{ color?: string; className?: string }>, {
+            color: childProps.color || variantColor,
+            className: cn(variantStyles.text, childProps.className),
+          });
+        }
+
+        // Handle both RNText and custom Text component (by displayName)
+        if (child.type === RNText || childType.displayName === "Text") {
           return cloneElement(child as React.ReactElement<{ className?: string }>, {
             className: cn(variantStyles.text, childProps.className),
           });
         }
 
-        if (child.type === RNText) {
-          return cloneElement(child as React.ReactElement<{ className?: string }>, {
-            className: cn(variantStyles.text, childProps.className),
+        // Handle icon components (Ionicons, etc.) - they have a color prop
+        // Check if the child type name includes "Icon" or is from vector-icons
+        const typeName = typeof child.type === "function" ? (child.type as { name?: string }).name : "";
+        if (typeName && (typeName.includes("Icon") || typeName === "Ionicons")) {
+          return cloneElement(child as React.ReactElement<{ color?: string }>, {
+            color: childProps.color || variantColor,
           });
         }
       }

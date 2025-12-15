@@ -254,13 +254,13 @@ function ButtonsDemo() {
           <SectionLabel>Icon Sizes</SectionLabel>
           <View className="flex-row flex-wrap gap-2 items-center">
             <Button size="icon-sm" variant="outline">
-              <Ionicons name="arrow-forward" size={16} className="text-foreground" />
+              <Ionicons name="arrow-forward" size={16} />
             </Button>
             <Button size="icon" variant="outline">
-              <Ionicons name="arrow-forward" size={16} className="text-foreground" />
+              <Ionicons name="arrow-forward" size={16} />
             </Button>
             <Button size="icon-lg" variant="outline">
-              <Ionicons name="arrow-forward" size={20} className="text-foreground" />
+              <Ionicons name="arrow-forward" size={20} />
             </Button>
           </View>
         </View>
@@ -271,11 +271,11 @@ function ButtonsDemo() {
           <SectionLabel>With Icon</SectionLabel>
           <View className="flex-row flex-wrap gap-2 items-center">
             <Button variant="outline" size="sm">
-              <Ionicons name="git-branch" size={16} className="text-foreground" />
+              <Ionicons name="git-branch" size={16} />
               <Text>New Branch</Text>
             </Button>
             <Button variant="outline" size="icon" className="rounded-full">
-              <Ionicons name="arrow-up" size={16} className="text-foreground" />
+              <Ionicons name="arrow-up" size={16} />
             </Button>
           </View>
         </View>
@@ -342,16 +342,12 @@ function BadgesDemo() {
         <View className="gap-2">
           <SectionLabel>With Icon</SectionLabel>
           <View className="flex-row flex-wrap gap-2 items-center">
-            <Badge className="bg-info gap-1">
-              <Ionicons name="checkmark-circle" size={12} className="text-info-foreground" />
-              <Text className="text-xs text-info-foreground">Verified</Text>
-            </Badge>
             <Badge className="gap-1">
-              <Ionicons name="checkmark-circle" size={12} color="white" />
+              <Ionicons name="checkmark-circle" size={12} />
               <Text className="text-xs">Success</Text>
             </Badge>
             <Badge variant="destructive" className="gap-1">
-              <Ionicons name="alert-circle" size={12} color="white" />
+              <Ionicons name="alert-circle" size={12} />
               <Text className="text-xs">Error</Text>
             </Badge>
             <Badge variant="secondary" className="gap-1">
@@ -371,13 +367,13 @@ function BadgesDemo() {
           <SectionLabel>Number Badges</SectionLabel>
           <View className="flex-row flex-wrap gap-2 items-center">
             <Badge className="h-5 min-w-5 justify-center rounded-full px-1.5">
-              <Text className="text-xs font-mono text-primary-foreground">8</Text>
+              <Text className="text-xs font-mono">8</Text>
             </Badge>
             <Badge className="h-5 min-w-5 justify-center rounded-full px-1.5" variant="destructive">
-              <Text className="text-xs font-mono text-destructive-foreground">99</Text>
+              <Text className="text-xs font-mono">99</Text>
             </Badge>
             <Badge className="h-5 min-w-5 justify-center rounded-full px-1.5" variant="outline">
-              <Text className="text-xs font-mono text-foreground">20+</Text>
+              <Text className="text-xs font-mono">20+</Text>
             </Badge>
           </View>
         </View>
@@ -1006,8 +1002,8 @@ export default function HomePage() {
 
               <Button size="lg" asChild>
                 <Link href="/docs/components">
-                  <Text className="text-primary-foreground">Browse Components</Text>
-                  <Ionicons name="arrow-forward" size={16} className="text-primary-foreground ml-1" />
+                  <Text>Browse Components</Text>
+                  <Ionicons name="arrow-forward" size={16} />
                 </Link>
               </Button>
             </View>

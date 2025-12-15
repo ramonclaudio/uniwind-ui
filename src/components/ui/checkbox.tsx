@@ -51,6 +51,7 @@ import {
   type ReactElement,
 } from "react";
 import { cn } from "@/lib/utils";
+import { useCSSVariable } from "uniwind";
 // To use a different icon library, change this import
 import { Ionicons } from "@expo/vector-icons";
 
@@ -137,12 +138,15 @@ export const Checkbox = forwardRef<View, CheckboxProps>(
       className
     );
 
+    // Resolve icon color from CSS variable
+    const iconColor = useCSSVariable("--color-primary-foreground") as string;
+
     // Default check icon
     const defaultCheckIcon = (
       <Ionicons
         name="checkmark"
         size={iconSize}
-        className="text-primary-foreground"
+        color={iconColor}
       />
     );
 
@@ -151,7 +155,7 @@ export const Checkbox = forwardRef<View, CheckboxProps>(
       <Ionicons
         name="remove"
         size={iconSize}
-        className="text-primary-foreground"
+        color={iconColor}
       />
     );
 
