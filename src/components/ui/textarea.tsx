@@ -7,6 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
+ * - uniwind (for useCSSVariable)
  *
  * ## Usage
  *
@@ -22,13 +23,7 @@
 import { TextInput, Platform, type TextInputProps } from "react-native";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
-
-/**
- * Font Configuration
- * Must match the font setup in your project (see text.tsx for reference)
- */
-const FONT_FAMILY = "SpaceMono-Regular";
-const FONT_CLASS = "font-sans";
+import { useCSSVariable } from "uniwind";
 
 export interface TextareaProps extends TextInputProps {
   className?: string;
@@ -38,11 +33,11 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
   ({ className = "", editable = true, style, ...props }, ref) => {
     const isDisabled = editable === false;
 
-    // On native (iOS/Android), we need inline fontFamily for Expo Go compatibility
-    // On web, className is sufficient
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
     const platformStyle = Platform.select({
       web: style,
-      default: [{ fontFamily: FONT_FAMILY }, style],
+      default: fontFamily ? [{ fontFamily }, style] : style,
     });
 
     return (
@@ -52,7 +47,7 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
         multiline
         textAlignVertical="top"
         className={cn(
-          FONT_CLASS,
+          "font-sans",
           "min-h-16 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base text-foreground shadow-xs dark:bg-input/30 md:text-sm",
           "web:transition-shadow web:outline-none web:focus-visible:border-ring web:focus-visible:ring-[3px] web:focus-visible:ring-ring/50",
           isDisabled && "web:cursor-not-allowed opacity-50",
