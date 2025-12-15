@@ -92,16 +92,11 @@ function useSelectContext() {
   return context;
 }
 
-/**
- * Get the displayName of a React element's type (minification-safe)
- */
 function getDisplayName(element: ReactElement): string | undefined {
   const type = element.type;
-  // Handle regular function components
   if (typeof type === "function") {
     return (type as { displayName?: string }).displayName;
   }
-  // Handle forwardRef components (they're objects with displayName)
   if (typeof type === "object" && type !== null) {
     return (type as { displayName?: string }).displayName;
   }
@@ -131,7 +126,6 @@ function extractItems(children: ReactNode, parentValue?: string): SelectItemData
       });
     } else if (displayName === "SelectGroup") {
       const groupProps = child.props as SelectGroupProps;
-      // Find the SelectLabel within the group
       let groupLabel: string | undefined;
       Children.forEach(groupProps.children, (groupChild) => {
         if (isValidElement(groupChild)) {
@@ -265,11 +259,8 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
       placeholder,
     } = useSelectContext();
 
-    // Get current theme to force DropDownPicker re-render on theme change
     const { theme } = useUniwind();
 
-    // Use useCSSVariable for theme colors - same pattern as Spinner component
-    // Both trigger and popover use card background and border colors
     const [
       cardColor,
       cardFgColor,
@@ -288,7 +279,6 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
       "--color-accent-foreground",
     ]) as string[];
 
-    // Apply values directly from CSS variables
     const card = cardColor;
     const cardForeground = cardFgColor;
     const border = borderColor;
@@ -297,11 +287,8 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
     const accent = accentColor;
     const accentForeground = accentFgColor;
 
-    // Key includes card color to force re-render when colors resolve
     const pickerKey = `dropdown-${theme}-${card || 'init'}`;
 
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string | undefined;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
 
@@ -405,7 +392,6 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
         }
       };
 
-      // Add listener with a small delay to avoid immediate close
       const timeoutId = setTimeout(() => {
         document.addEventListener("mousedown", handleClickOutside);
       }, 0);

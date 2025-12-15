@@ -964,7 +964,6 @@ export default function HomePage() {
 
   return (
     <View style={styles.container} className="bg-background">
-      {/* Dot grid texture for full page */}
       <DotGrid spacing={24} dotSize={1} opacity={0.04} />
 
       {isWeb && <SiteHeader />}
@@ -975,7 +974,6 @@ export default function HomePage() {
         showsVerticalScrollIndicator={false}
       >
         <View className="relative overflow-hidden">
-          {/* Animated floating orbs for hero */}
           <AnimatedHeroBg />
 
           <View className="px-6 py-16 md:py-24 lg:py-32 relative z-10">

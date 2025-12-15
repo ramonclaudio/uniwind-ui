@@ -33,8 +33,6 @@ export const Textarea = forwardRef<TextInput, TextareaProps>(
   ({ className = "", editable = true, style, ...props }, ref) => {
     const isDisabled = editable === false;
 
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const platformStyle = Platform.select({

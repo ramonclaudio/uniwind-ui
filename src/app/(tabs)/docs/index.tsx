@@ -35,7 +35,6 @@ export default function DocsIndex() {
       className="flex-1 bg-background"
       contentContainerClassName="p-6 pb-20 max-w-3xl"
     >
-      {/* Hero */}
       <View className="mb-10">
         <Text bold className="text-4xl text-foreground mb-4 leading-tight">
           Build your component library
@@ -47,7 +46,6 @@ export default function DocsIndex() {
         </Text>
       </View>
 
-      {/* CTA */}
       <View className="flex-row gap-3 mb-10">
         <Button asChild>
           <Link href="/docs/components">
@@ -59,7 +57,6 @@ export default function DocsIndex() {
 
       <Separator className="mb-10" />
 
-      {/* Philosophy */}
       <View className="mb-10">
         <Text bold className="text-xl text-foreground mb-3">
           Not a component library
@@ -75,7 +72,6 @@ export default function DocsIndex() {
         </Text>
       </View>
 
-      {/* Features */}
       <View className="flex-row flex-wrap gap-3 mb-10">
         <FeatureCard
           icon="code-slash"
@@ -101,7 +97,6 @@ export default function DocsIndex() {
 
       <Separator className="mb-10" />
 
-      {/* Why Uniwind */}
       <View className="mb-10">
         <Text bold className="text-xl text-foreground mb-3">
           Why Uniwind?
@@ -132,7 +127,6 @@ export default function DocsIndex() {
 
       <Separator className="mb-10" />
 
-      {/* Footer note */}
       <View>
         <Text bold className="text-muted-foreground">
           Copy. Paste. Ship.

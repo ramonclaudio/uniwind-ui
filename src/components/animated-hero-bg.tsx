@@ -105,7 +105,6 @@ function FloatingOrb({ config, primaryColor }: { config: OrbConfig; primaryColor
 }
 
 export function AnimatedHeroBg() {
-  // Use useResolveClassNames with bg-primary to get the primary color
   const { backgroundColor: primaryColor } = useResolveClassNames("bg-primary");
 
   return (

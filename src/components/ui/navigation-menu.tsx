@@ -40,30 +40,20 @@ import { View, Text as RNText, Pressable, Platform, useWindowDimensions, type Vi
 import { forwardRef, createContext, useContext, useState, useEffect, useRef, useCallback, cloneElement, isValidElement, Children, type ReactNode, type ReactElement } from "react";
 import { cn } from "@/lib/utils";
 import { Link, type Href } from "expo-router";
-// To use a different icon library, change this import
 import { Ionicons } from "@expo/vector-icons";
 import { useCSSVariable } from "uniwind";
 
-/**
- * Get the displayName of a React element's type (minification-safe)
- * Returns undefined for non-component types (strings, etc.)
- */
 function getDisplayName(element: ReactElement): string | undefined {
   const type = element.type;
-  // Handle regular function components
   if (typeof type === "function") {
     return (type as { displayName?: string }).displayName;
   }
-  // Handle forwardRef components (they're objects with displayName)
   if (typeof type === "object" && type !== null) {
     return (type as { displayName?: string }).displayName;
   }
   return undefined;
 }
 
-/**
- * Type guard to check if a value is a ReactElement with specific props
- */
 function isElementWithProps<P>(
   element: ReactNode,
   displayName: string
@@ -74,7 +64,6 @@ function isElementWithProps<P>(
   );
 }
 
-// Context for managing active state
 type NavigationMenuContextValue = {
   activeItem: string | null;
   setActiveItem: (item: string | null) => void;
@@ -85,7 +74,6 @@ const NavigationMenuContext = createContext<NavigationMenuContextValue>({
   setActiveItem: () => {},
 });
 
-// Context for responsive collapse
 type ResponsiveContextValue = {
   visibleCount: number;
   measurementComplete: boolean;
@@ -104,22 +92,11 @@ const ResponsiveContext = createContext<ResponsiveContextValue>({
   setCollapsedItems: () => {},
 });
 
-/**
- * Helper hook to get icon color from CSS variable
- * Uses useCSSVariable for efficient single subscription
- */
 function useIconColor(): string {
   const color = useCSSVariable("--color-muted-foreground") as string;
   return color;
 }
 
-/**
- * Calculate how many items can fit in the available width
- * @param itemWidths - Map of item index to width
- * @param availableWidth - Total available container width
- * @param minVisibleItems - Minimum items to always show
- * @returns Number of items that can be visible
- */
 function calculateVisibleCount(
   itemWidths: Map<number, number>,
   availableWidth: number,
@@ -129,8 +106,8 @@ function calculateVisibleCount(
     .sort((a, b) => a[0] - b[0])
     .map(([, width]) => width);
 
-  const overflowMenuWidth = 100; // Reserve space for "More" button
-  const gap = 4; // gap-1 = 4px
+  const overflowMenuWidth = 100;
+  const gap = 4;
   let remaining = availableWidth;
   let count = 0;
 
@@ -152,10 +129,6 @@ function calculateVisibleCount(
   return Math.max(count, minVisibleItems);
 }
 
-/**
- * ChevronIcon component that works with both web (className) and native (color prop)
- * To use a different icon library, change the Ionicons import at the top of this file
- */
 function ChevronIcon({ direction, size = 12 }: { direction: "up" | "down"; size?: number }) {
   const color = useIconColor();
   return (
@@ -167,7 +140,6 @@ function ChevronIcon({ direction, size = 12 }: { direction: "up" | "down"; size?
   );
 }
 
-// NavigationMenu - Root container
 export interface NavigationMenuProps extends ViewProps {
   children?: ReactNode;
   className?: string;
@@ -182,7 +154,7 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
     const [activeItem, setActiveItem] = useState<string | null>(null);
     const [containerWidth, setContainerWidth] = useState<number>(0);
     const [itemWidths, setItemWidths] = useState<Map<number, number>>(new Map());
-    const [visibleCount, setVisibleCount] = useState<number>(Infinity); // Start showing all for measurement
+    const [visibleCount, setVisibleCount] = useState<number>(Infinity);
     const [measurementComplete, setMeasurementComplete] = useState(false);
     const [collapsedItems, setCollapsedItems] = useState<ReactNode[]>([]);
     const [expectedItemCount, setExpectedItemCount] = useState<number>(0);
@@ -190,10 +162,8 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
     const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const { width: windowWidth } = useWindowDimensions();
 
-    // Use window width as fallback if container width not measured
-    const effectiveWidth = containerWidth > 0 ? containerWidth : windowWidth - 32; // 32px padding
+    const effectiveWidth = containerWidth > 0 ? containerWidth : windowWidth - 32;
 
-    // Register item width for responsive calculation
     const registerItemWidth = useCallback((index: number, width: number) => {
       setItemWidths(prev => {
         const newMap = new Map(prev);
@@ -202,12 +172,10 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
       });
     }, []);
 
-    // Track expected item count from children
     const registerExpectedCount = useCallback((count: number) => {
       setExpectedItemCount(count);
     }, []);
 
-    // Calculate visible items based on container width
     useEffect(() => {
       if (!responsive) {
         setVisibleCount(Infinity);
@@ -215,7 +183,6 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
         return;
       }
 
-      // Wait until we have measurements for all expected items
       if (effectiveWidth === 0 || expectedItemCount === 0 || itemWidths.size < expectedItemCount) {
         return;
       }
@@ -225,20 +192,17 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
       setMeasurementComplete(true);
     }, [effectiveWidth, itemWidths, responsive, minVisibleItems, expectedItemCount]);
 
-    // Recalculate when window/container size changes
     useEffect(() => {
       if (measurementComplete && responsive && itemWidths.size > 0) {
         setVisibleCount(calculateVisibleCount(itemWidths, effectiveWidth, minVisibleItems));
       }
     }, [effectiveWidth, measurementComplete, responsive, minVisibleItems, itemWidths]);
 
-    // Handle container layout
     const handleLayout = useCallback((event: LayoutChangeEvent) => {
       const { width } = event.nativeEvent.layout;
       setContainerWidth(width);
     }, []);
 
-    // Clear timeout on unmount
     useEffect(() => {
       return () => {
         if (closeTimeoutRef.current) {
@@ -247,7 +211,6 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
       };
     }, []);
 
-    // Handle click outside for web
     useEffect(() => {
       if (Platform.OS !== "web" || !activeItem) return;
 
@@ -262,14 +225,12 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
       return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [activeItem]);
 
-    // Delayed close to allow moving from trigger to content
     const handleMouseLeave = () => {
       closeTimeoutRef.current = setTimeout(() => {
         setActiveItem(null);
       }, 100);
     };
 
-    // Cancel close when re-entering
     const handleMouseEnter = () => {
       if (closeTimeoutRef.current) {
         clearTimeout(closeTimeoutRef.current);
@@ -277,7 +238,6 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
       }
     };
 
-    // Web hover props - close menu when mouse leaves the entire nav (with delay)
     const webHoverProps = Platform.OS === "web" ? {
       onMouseLeave: handleMouseLeave,
       onMouseEnter: handleMouseEnter,
@@ -302,7 +262,6 @@ export const NavigationMenu = forwardRef<View, NavigationMenuProps>(
 );
 NavigationMenu.displayName = "NavigationMenu";
 
-// NavigationMenuList - Horizontal list of items
 export interface NavigationMenuListProps extends ViewProps {
   children?: ReactNode;
   className?: string;
@@ -316,18 +275,14 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
     const { activeItem, setActiveItem } = useContext(NavigationMenuContext);
     const childArray = Children.toArray(children);
 
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
-    // Register expected item count for measurement
     useEffect(() => {
       registerExpectedCount(childArray.length);
     }, [childArray.length, registerExpectedCount]);
 
-    // Separate visible and collapsed items
     const visibleItems = visibleCount === Infinity
       ? childArray
       : childArray.slice(0, visibleCount);
@@ -335,8 +290,6 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
       ? []
       : childArray.slice(visibleCount);
 
-    // Update collapsed items in context for external access
-    // Only re-run when the count changes (not when items shuffle with same count)
     useEffect(() => {
       setCollapsedItems(hiddenItems);
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -347,10 +300,8 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
     const isOverflowActive = activeItem === overflowValue;
     const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    // Close overflow menu with optional delay
     const closeOverflow = useCallback(() => setActiveItem(null), [setActiveItem]);
 
-    // Delayed close for hover - allows moving between trigger and dropdown
     const scheduleClose = useCallback(() => {
       if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
       closeTimeoutRef.current = setTimeout(() => {
@@ -358,7 +309,6 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
       }, 150);
     }, [closeOverflow]);
 
-    // Cancel scheduled close
     const cancelClose = useCallback(() => {
       if (closeTimeoutRef.current) {
         clearTimeout(closeTimeoutRef.current);
@@ -366,27 +316,22 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
       }
     }, []);
 
-    // Open overflow and cancel any pending close
     const openOverflow = useCallback(() => {
       cancelClose();
       setActiveItem(overflowValue);
     }, [cancelClose, setActiveItem, overflowValue]);
 
-    // Cleanup timeout on unmount
     useEffect(() => {
       return () => {
         if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
       };
     }, []);
 
-    // Web hover props for overflow menu - uses delayed close
     const webHoverProps = Platform.OS === "web" ? {
       onMouseEnter: openOverflow,
       onMouseLeave: scheduleClose,
     } : {};
 
-    // During measurement phase, render all items invisibly
-    // Only measuring if visibleCount is Infinity AND measurement is not complete
     const isMeasuring = visibleCount === Infinity && childArray.length > 0 && !measurementComplete;
 
     return (
@@ -394,15 +339,12 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
         ref={ref}
         className={cn(
           "flex-row items-center gap-1 flex-1",
-          // Only clip overflow during measurement to prevent flash
-          // After measurement, allow dropdowns to overflow
           isMeasuring && "overflow-hidden",
           className
         )}
         style={isMeasuring ? { opacity: 0, height: 40 } : undefined}
         {...props}
       >
-        {/* During measurement, render all items; after, render only visible */}
         {(isMeasuring ? childArray : visibleItems).map((child, index) => {
           if (isValidElement(child)) {
             return cloneElement(child as ReactElement<NavigationMenuItemProps>, {
@@ -413,7 +355,6 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
           return child;
         })}
 
-        {/* Overflow "More" menu for collapsed items - only show after measurement */}
         {hasOverflow && !isMeasuring && (
           <View className="relative" {...webHoverProps}>
             <Pressable
@@ -428,7 +369,6 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
               <ChevronIcon direction={isOverflowActive ? "up" : "down"} size={12} />
             </Pressable>
 
-            {/* Overflow dropdown content */}
             {isOverflowActive && (
               <View
                 className={cn(
@@ -440,13 +380,11 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
                 onStartShouldSetResponder={() => true}
               >
                 {hiddenItems.map((child, index) => {
-                  // Extract the content from NavigationMenuItem for the overflow menu
                   if (!isValidElement(child)) return null;
 
                   const itemProps = child.props as NavigationMenuItemProps;
                   const itemChildren = Children.toArray(itemProps.children);
 
-                  // Find trigger and content in the item
                   let triggerLabel: ReactNode = null;
                   let contentChildren: ReactNode[] = [];
                   let hasSubContent = false;
@@ -463,13 +401,11 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
                     } else if (displayName === "NavigationMenuContent") {
                       contentChildren = Children.toArray((itemChild.props as NavigationMenuContentProps).children);
                     } else if (displayName === "NavigationMenuLink") {
-                      // Direct link without submenu
                       triggerLabel = (itemChild.props as NavigationMenuLinkProps).children;
-                      itemValue = undefined; // No submenu
+                      itemValue = undefined;
                     }
                   });
 
-                  // Render as expandable submenu or direct link
                   if (hasSubContent && contentChildren.length > 0) {
                     return (
                       <OverflowSubmenu
@@ -481,7 +417,6 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
                       </OverflowSubmenu>
                     );
                   } else {
-                    // Direct link item
                     const linkChild = itemChildren.find((c): c is ReactElement<NavigationMenuLinkProps> =>
                       isElementWithProps<NavigationMenuLinkProps>(c, "NavigationMenuLink")
                     );
@@ -510,7 +445,6 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
 );
 NavigationMenuList.displayName = "NavigationMenuList";
 
-// Internal component for overflow submenu items
 interface OverflowSubmenuProps {
   label: ReactNode;
   value: string;
@@ -521,8 +455,6 @@ const OverflowSubmenu = ({ label, value, children }: OverflowSubmenuProps) => {
   const [expanded, setExpanded] = useState(false);
   const { setActiveItem } = useContext(NavigationMenuContext);
 
-  // Resolve font family from CSS variable for native platforms
-  // Extract just the first font name (removes web fallbacks)
   const rawFontFamily = useCSSVariable("--font-sans") as string;
   const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
   const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
@@ -575,7 +507,6 @@ const OverflowSubmenu = ({ label, value, children }: OverflowSubmenuProps) => {
   );
 };
 
-// NavigationMenuItem - Individual menu item wrapper
 export interface NavigationMenuItemProps extends ViewProps {
   children?: ReactNode;
   className?: string;
@@ -589,7 +520,6 @@ export const NavigationMenuItem = forwardRef<View, NavigationMenuItemProps>(
     const { setActiveItem } = useContext(NavigationMenuContext);
     const { registerItemWidth } = useContext(ResponsiveContext);
 
-    // Measure item width for responsive calculation
     const handleLayout = useCallback((event: LayoutChangeEvent) => {
       if (__itemIndex !== undefined) {
         const { width } = event.nativeEvent.layout;
@@ -597,7 +527,6 @@ export const NavigationMenuItem = forwardRef<View, NavigationMenuItemProps>(
       }
     }, [__itemIndex, registerItemWidth]);
 
-    // Web hover props - when hovering this item, set it as active (or close if no value)
     const webHoverProps = Platform.OS === "web" ? {
       onMouseEnter: () => setActiveItem(value || null),
     } : {};
@@ -617,14 +546,9 @@ export const NavigationMenuItem = forwardRef<View, NavigationMenuItemProps>(
 );
 NavigationMenuItem.displayName = "NavigationMenuItem";
 
-/**
- * Exported trigger styles for use with custom trigger implementations
- * Matches shadcn's navigationMenuTriggerStyle export
- */
 export const navigationMenuTriggerStyle =
   "h-9 flex-row items-center justify-center gap-1 rounded-md bg-background px-4 py-2 text-sm font-medium web:transition-shadow web:outline-none web:focus-visible:ring-[3px] web:focus-visible:ring-ring/50 web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent";
 
-// NavigationMenuTrigger - Button that toggles content
 export interface NavigationMenuTriggerProps extends PressableProps {
   children?: ReactNode;
   className?: string;
@@ -637,13 +561,10 @@ export const NavigationMenuTrigger = forwardRef<View, NavigationMenuTriggerProps
     const isActive = value ? activeItem === value : false;
     const [iconDirection, setIconDirection] = useState<"up" | "down">("down");
 
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
-    // Delay icon animation after menu state changes
     useEffect(() => {
       const timeout = setTimeout(() => {
         setIconDirection(isActive ? "up" : "down");
@@ -658,7 +579,6 @@ export const NavigationMenuTrigger = forwardRef<View, NavigationMenuTriggerProps
       onPress?.(e);
     };
 
-    // Web hover props - open menu on hover
     const webHoverProps = Platform.OS === "web" ? {
       onMouseEnter: () => value && setActiveItem(value),
     } : {};
@@ -689,7 +609,6 @@ export const NavigationMenuTrigger = forwardRef<View, NavigationMenuTriggerProps
 );
 NavigationMenuTrigger.displayName = "NavigationMenuTrigger";
 
-// NavigationMenuContent - Dropdown content
 export interface NavigationMenuContentProps extends ViewProps {
   children?: ReactNode;
   className?: string;
@@ -705,7 +624,6 @@ export const NavigationMenuContent = forwardRef<View, NavigationMenuContentProps
 
     return (
       <>
-        {/* Backdrop to close menu on touch outside (mobile only) */}
         {Platform.OS !== "web" && (
           <Pressable
             onPress={() => setActiveItem(null)}
@@ -737,7 +655,6 @@ export const NavigationMenuContent = forwardRef<View, NavigationMenuContentProps
 );
 NavigationMenuContent.displayName = "NavigationMenuContent";
 
-// NavigationMenuLink - Navigation link item
 export interface NavigationMenuLinkProps extends Omit<PressableProps, "children"> {
   children?: ReactNode;
   className?: string;
@@ -751,19 +668,16 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
     const { setActiveItem } = useContext(NavigationMenuContext);
     const [isHovered, setIsHovered] = useState(false);
 
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
     const handlePress: PressableProps["onPress"] = (e) => {
-      setIsHovered(false); // Reset hover on press
-      setActiveItem(null); // Close menu on link press
+      setIsHovered(false);
+      setActiveItem(null);
       onPress?.(e);
     };
 
-    // Web hover props - active: only handles press, not hover on web
     const webHoverProps = Platform.OS === "web" ? {
       onMouseEnter: () => setIsHovered(true),
       onMouseLeave: () => setIsHovered(false),
@@ -784,7 +698,6 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
       className
     );
 
-    // If href is provided, use Expo Router's Link
     if (href) {
       return (
         <Link href={href} asChild>
@@ -801,7 +714,6 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
       );
     }
 
-    // Helper to style children with RNText for fonts
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
         return <RNText className="font-sans text-sm text-popover-foreground" style={nativeFontStyle}>{child}</RNText>;
@@ -809,9 +721,6 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
       return child;
     };
 
-    // If asChild, clone the child element with className
-    // Wrap children in a View to ensure flex layout works regardless of the
-    // parent element (e.g., Link on web doesn't always support flex properly)
     if (asChild && isValidElement(children)) {
       const childProps = children.props as { className?: string; children?: ReactNode };
 
@@ -844,7 +753,6 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
 );
 NavigationMenuLink.displayName = "NavigationMenuLink";
 
-// NavigationMenuViewport - Container for dropdown content (simplified for RN)
 export interface NavigationMenuViewportProps extends ViewProps {
   children?: ReactNode;
   className?: string;
@@ -865,7 +773,6 @@ export const NavigationMenuViewport = forwardRef<View, NavigationMenuViewportPro
 );
 NavigationMenuViewport.displayName = "NavigationMenuViewport";
 
-// NavigationMenuIndicator - Visual indicator (simplified for RN)
 export interface NavigationMenuIndicatorProps extends ViewProps {
   className?: string;
 }

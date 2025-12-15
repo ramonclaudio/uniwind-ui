@@ -35,33 +35,21 @@ import {
  */
 export const StyledIonicons = withUniwind(BaseIonicons);
 
-/**
- * Props for styled SVG Path with className-based coloring
- */
 type StyledPathProps = Omit<PathProps, "stroke" | "fill"> & {
   strokeClassName?: string;
   fillClassName?: string;
 };
 
-/**
- * Props for styled SVG Rect with className-based coloring
- */
 type StyledRectProps = Omit<RectProps, "stroke" | "fill"> & {
   strokeClassName?: string;
   fillClassName?: string;
 };
 
-/**
- * Props for styled SVG Circle with className-based coloring
- */
 type StyledCircleProps = Omit<CircleProps, "stroke" | "fill"> & {
   strokeClassName?: string;
   fillClassName?: string;
 };
 
-/**
- * Props for styled SVG Line with className-based coloring
- */
 type StyledLineProps = Omit<LineProps, "stroke"> & {
   strokeClassName?: string;
 };
@@ -90,9 +78,6 @@ export const StyledPath = forwardRef<BasePath, StyledPathProps>(
 );
 StyledPath.displayName = "StyledPath";
 
-/**
- * Styled SVG Rect with stroke/fill className support
- */
 export const StyledRect = forwardRef<BaseRect, StyledRectProps>(
   ({ strokeClassName, fillClassName, ...props }, ref) => {
     const strokeStyles = useResolveClassNames(strokeClassName ?? "");
@@ -110,9 +95,6 @@ export const StyledRect = forwardRef<BaseRect, StyledRectProps>(
 );
 StyledRect.displayName = "StyledRect";
 
-/**
- * Styled SVG Circle with stroke/fill className support
- */
 export const StyledCircle = forwardRef<BaseCircle, StyledCircleProps>(
   ({ strokeClassName, fillClassName, ...props }, ref) => {
     const strokeStyles = useResolveClassNames(strokeClassName ?? "");
@@ -130,9 +112,6 @@ export const StyledCircle = forwardRef<BaseCircle, StyledCircleProps>(
 );
 StyledCircle.displayName = "StyledCircle";
 
-/**
- * Styled SVG Line with stroke className support
- */
 export const StyledLine = forwardRef<BaseLine, StyledLineProps>(
   ({ strokeClassName, ...props }, ref) => {
     const strokeStyles = useResolveClassNames(strokeClassName ?? "");

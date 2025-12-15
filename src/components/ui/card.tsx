@@ -102,8 +102,6 @@ export interface CardTitleProps extends TextProps {
 
 export const CardTitle = forwardRef<RNText, CardTitleProps>(
   ({ children, className = "", style, ...props }, ref) => {
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const platformStyle = Platform.select({
@@ -132,8 +130,6 @@ export interface CardDescriptionProps extends TextProps {
 
 export const CardDescription = forwardRef<RNText, CardDescriptionProps>(
   ({ children, className = "", style, ...props }, ref) => {
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const platformStyle = Platform.select({

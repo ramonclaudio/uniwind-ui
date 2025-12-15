@@ -13,7 +13,6 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { type ReactNode } from "react";
 
-// Text preview component to avoid naming conflict with Text import
 function TextPreview() {
   return (
     <View className="gap-1">
@@ -178,7 +177,6 @@ export default function ComponentsIndex() {
       contentContainerClassName="p-6 pb-20"
       showsVerticalScrollIndicator={false}
     >
-      {/* Header */}
       <View className="mb-6">
         <Text bold className="text-3xl text-foreground mb-2">
           Components
@@ -188,7 +186,6 @@ export default function ComponentsIndex() {
         </Text>
       </View>
 
-      {/* Quick Access List */}
       <View className="flex-row flex-wrap gap-x-4 gap-y-1 mb-8">
         {components.map((component) => (
           <Link key={component.href} href={component.href as Href} asChild>
@@ -201,19 +198,16 @@ export default function ComponentsIndex() {
         ))}
       </View>
 
-      {/* Components Grid */}
       <View className="flex-row flex-wrap gap-4">
         {components.map((component) => (
           <Link key={component.href} href={component.href as Href} asChild>
             <Pressable className="w-full sm:basis-[48%] sm:grow-0 rounded-xl border border-border bg-card overflow-hidden active:opacity-80">
-              {/* Preview Area */}
               <View
                 className="h-40 items-center justify-center bg-muted/50 border-b border-border"
                 style={{ pointerEvents: "none" }}
               >
                 {component.preview}
               </View>
-              {/* Name & Description */}
               <View className="p-4">
                 <Text className="text-foreground mb-1">{component.name}</Text>
                 <Text className="text-sm text-muted-foreground">{component.description}</Text>

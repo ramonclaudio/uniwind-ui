@@ -51,7 +51,6 @@ export function ComponentPreviewTabs({
         className
       )}
     >
-      {/* Tabs */}
       <View className="flex-row border-b border-border">
         <Pressable
           onPress={() => setActiveTab("preview")}
@@ -89,7 +88,6 @@ export function ComponentPreviewTabs({
         </Pressable>
       </View>
 
-      {/* Content */}
       {activeTab === "preview" ? (
         <View
           className="items-center justify-center"

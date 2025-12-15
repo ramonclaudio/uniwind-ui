@@ -28,7 +28,6 @@ export function useCSSVariable(variableName: string): string | undefined {
 
     setValue(getCSSVariable());
 
-    // Listen for theme changes via a MutationObserver on the root element
     if (typeof MutationObserver !== "undefined" && typeof document !== "undefined") {
       const observer = new MutationObserver(() => {
         setValue(getCSSVariable());
@@ -51,7 +50,6 @@ export function useCSSVariable(variableName: string): string | undefined {
 export function useCSSVariables<T extends Record<string, string>>(
   variables: T
 ): Record<keyof T, string | undefined> {
-  // Memoize the stringified variables for stable dependency
   const variablesKey = useMemo(() => JSON.stringify(variables), [variables]);
 
   const [values, setValues] = useState<Record<keyof T, string | undefined>>(

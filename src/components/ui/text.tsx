@@ -58,7 +58,6 @@ const VARIANT_CLASSES = {
 
 type TypographyVariant = keyof typeof VARIANT_CLASSES;
 
-/** Font configuration - classes and CSS variables */
 const FONT_CONFIG = {
   regular: { class: "font-sans", cssVar: "--font-sans" },
   bold: { class: "font-sans-bold", cssVar: "--font-sans-bold" },
@@ -71,17 +70,11 @@ type FontVariant = keyof typeof FONT_CONFIG;
 export interface TextProps extends RNTextProps {
   children?: ReactNode;
   className?: string;
-  /** Apply bold font variant */
   bold?: boolean;
-  /** Apply italic font variant */
   italic?: boolean;
-  /** Typography variant for semantic styling */
   variant?: TypographyVariant;
 }
 
-/**
- * Determines which font variant to use based on props
- */
 function getFontVariant(bold?: boolean, italic?: boolean): FontVariant {
   if (bold && italic) return "boldItalic";
   if (bold) return "bold";
@@ -95,14 +88,9 @@ export const Text = forwardRef<RNText, TextProps>(
     const { class: fontClass, cssVar } = FONT_CONFIG[fontVariant];
     const variantClass = variant ? VARIANT_CLASSES[variant] : "";
 
-    // Resolve font family from CSS variable for native platforms
     const rawFontFamily = useCSSVariable(cssVar) as string;
-
-    // Extract just the first font name (removes web fallbacks like "ui-monospace, monospace")
-    // CSS font-family values are comma-separated, but native needs just one font name
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
 
-    // On native, apply fontFamily as inline style; on web, className is sufficient
     const platformStyle = Platform.select({
       web: style,
       default: fontFamily ? [{ fontFamily }, style] : style,

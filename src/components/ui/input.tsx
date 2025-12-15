@@ -29,13 +29,10 @@ export interface InputProps extends TextInputProps {
   className?: string;
 }
 
-// shadcn v4: "h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs dark:bg-input/30 md:text-sm"
 export const Input = forwardRef<TextInput, InputProps>(
   ({ className = "", editable = true, style, ...props }, ref) => {
     const isDisabled = editable === false;
 
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const platformStyle = Platform.select({

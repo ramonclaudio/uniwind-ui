@@ -50,11 +50,8 @@ function Spinner({
   size = "small",
   ...props
 }: SpinnerProps) {
-  // Use useCSSVariable for default foreground color (more efficient)
   const defaultColor = useCSSVariable("--color-foreground") as string;
-  // Use useResolveClassNames only when custom className is provided
   const customStyles = useResolveClassNames(className || "");
-  // Priority: explicit color prop > className color > default foreground
   const resolvedColor = color || (customStyles.color as string) || defaultColor;
 
   return (

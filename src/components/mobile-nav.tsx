@@ -14,7 +14,6 @@ interface MobileNavProps {
   className?: string;
 }
 
-// Docs navigation sections
 const GETTING_STARTED = [
   { name: "Introduction", href: "/docs" },
   { name: "Components", href: "/docs/components" },

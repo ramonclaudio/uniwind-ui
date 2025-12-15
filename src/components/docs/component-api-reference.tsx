@@ -28,7 +28,6 @@ export function ComponentApiReference({
         </Text>
       )}
       <View className="border border-border rounded-lg overflow-hidden">
-        {/* Header */}
         <View className="flex-row bg-muted/50 border-b border-border">
           <View className="flex-1 p-3 border-r border-border">
             <Text className="text-sm text-foreground">Prop</Text>
@@ -40,7 +39,6 @@ export function ComponentApiReference({
             <Text className="text-sm text-foreground">Default</Text>
           </View>
         </View>
-        {/* Rows */}
         {props.map((prop, index) => (
           <View
             key={prop.name}

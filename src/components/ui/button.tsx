@@ -50,8 +50,6 @@ import {
 import { cn } from "@/lib/utils";
 import { useCSSVariable, useResolveClassNames } from "uniwind";
 
-// Mapping from button variant to CSS variable for icon colors
-// Uses useCSSVariable for efficient single subscription per variant
 const variantColorMap = {
   default: "--color-primary-foreground",
   destructive: "--color-destructive-foreground",
@@ -161,17 +159,13 @@ export const Button = forwardRef<View, ButtonProps>(
       className
     );
 
-    // Use useCSSVariable for efficient icon color resolution
     const cssVarName = variantColorMap[variant];
     const iconColor = useCSSVariable(cssVarName) as string;
 
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
-    // Inline spinner component using ActivityIndicator
     const ButtonSpinner = ({ className: spinnerClassName }: { className?: string }) => {
       const defaultColor = useCSSVariable("--color-foreground") as string;
       const customStyles = useResolveClassNames(spinnerClassName || "");
@@ -251,8 +245,6 @@ export const Button = forwardRef<View, ButtonProps>(
       }>;
       const childProps = child.props;
 
-      // Wrap children in a View to ensure flex layout works regardless of the
-      // parent element (e.g., Link on web doesn't always support flex properly)
       const wrappedChildren = childProps.children ? (
         <RNView className="flex-1 h-full flex-row items-center justify-center gap-2">
           {loading && <ButtonSpinner className={variantStyles.text} />}
@@ -285,5 +277,4 @@ export const Button = forwardRef<View, ButtonProps>(
 
 Button.displayName = "Button";
 
-// Export variant and size types for external use
 export type { ButtonVariant, ButtonSize };

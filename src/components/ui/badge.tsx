@@ -96,13 +96,10 @@ export const Badge = forwardRef<View, BadgeProps>(
       className
     );
 
-    // Resolve font family from CSS variable for native platforms
-    // Extract just the first font name (removes web fallbacks)
     const rawFontFamily = useCSSVariable("--font-sans") as string;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
-    // Resolve variant color from CSS variable for icons and spinners
     const variantColor = useCSSVariable(variantStyles.colorVar) as string;
 
     const styledChildren = (child: ReactNode): ReactNode => {
@@ -121,7 +118,6 @@ export const Badge = forwardRef<View, BadgeProps>(
         const childProps = child.props as { className?: string; children?: ReactNode; color?: string };
         const childType = child.type as { displayName?: string };
 
-        // Handle ActivityIndicator (native spinner) - pass color prop
         if (child.type === ActivityIndicator) {
           return cloneElement(child as React.ReactElement<{ color?: string; className?: string }>, {
             color: childProps.color || variantColor,
@@ -129,7 +125,6 @@ export const Badge = forwardRef<View, BadgeProps>(
           });
         }
 
-        // Handle Spinner component - pass color prop
         if (childType.displayName === "Spinner") {
           return cloneElement(child as React.ReactElement<{ color?: string; className?: string }>, {
             color: childProps.color || variantColor,
@@ -137,15 +132,12 @@ export const Badge = forwardRef<View, BadgeProps>(
           });
         }
 
-        // Handle both RNText and custom Text component (by displayName)
         if (child.type === RNText || childType.displayName === "Text") {
           return cloneElement(child as React.ReactElement<{ className?: string }>, {
             className: cn(variantStyles.text, childProps.className),
           });
         }
 
-        // Handle icon components (Ionicons, etc.) - they have a color prop
-        // Check if the child type name includes "Icon" or is from vector-icons
         const typeName = typeof child.type === "function" ? (child.type as { name?: string }).name : "";
         if (typeName && (typeName.includes("Icon") || typeName === "Ionicons")) {
           return cloneElement(child as React.ReactElement<{ color?: string }>, {
@@ -165,8 +157,6 @@ export const Badge = forwardRef<View, BadgeProps>(
       }>;
       const childProps = child.props;
 
-      // Wrap children in a View to ensure flex layout works regardless of the
-      // parent element (e.g., Link on web doesn't always support flex properly)
       const wrappedChildren = childProps.children ? (
         <View className="flex-row items-center gap-1">
           {Children.map(childProps.children, styledChildren)}

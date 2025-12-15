@@ -6,7 +6,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { cn } from "@/lib/utils";
 import { useResolveClassNames } from "uniwind";
 
-// Define icon names that have outline variants
 type OutlineableIcon = "home" | "book";
 
 interface TabItem {
@@ -25,7 +24,6 @@ export function MobileTabBar() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  // Theme-aware colors for Ionicons
   const foregroundStyles = useResolveClassNames("text-foreground");
   const mutedStyles = useResolveClassNames("text-muted-foreground");
   const foregroundColor = foregroundStyles.color as string;

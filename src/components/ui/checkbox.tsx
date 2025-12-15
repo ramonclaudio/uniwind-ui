@@ -52,7 +52,6 @@ import {
 } from "react";
 import { cn } from "@/lib/utils";
 import { useCSSVariable } from "uniwind";
-// To use a different icon library, change this import
 import { Ionicons } from "@expo/vector-icons";
 
 /** Checkbox can be checked, unchecked, or indeterminate */
@@ -115,14 +114,12 @@ export const Checkbox = forwardRef<View, CheckboxProps>(
     const isControlled = controlledChecked !== undefined;
     const checkedState = isControlled ? controlledChecked : internalChecked;
 
-    // Determine visual states
     const isChecked = checkedState === true;
     const isIndeterminate = checkedState === "indeterminate";
     const hasIndicator = isChecked || isIndeterminate;
 
     const handlePress = () => {
       if (disabled) return;
-      // Toggle: indeterminate -> true, true -> false, false -> true
       const newValue: CheckedState = checkedState === "indeterminate" ? true : !checkedState;
       if (!isControlled) {
         setInternalChecked(newValue);
@@ -138,28 +135,16 @@ export const Checkbox = forwardRef<View, CheckboxProps>(
       className
     );
 
-    // Resolve icon color from CSS variable
     const iconColor = useCSSVariable("--color-primary-foreground") as string;
 
-    // Default check icon
     const defaultCheckIcon = (
-      <Ionicons
-        name="checkmark"
-        size={iconSize}
-        color={iconColor}
-      />
+      <Ionicons name="checkmark" size={iconSize} color={iconColor} />
     );
 
-    // Default indeterminate icon (minus/dash)
     const defaultIndeterminateIcon = (
-      <Ionicons
-        name="remove"
-        size={iconSize}
-        color={iconColor}
-      />
+      <Ionicons name="remove" size={iconSize} color={iconColor} />
     );
 
-    // The indicator content based on state
     const indicatorContent = hasIndicator ? (
       <View className="flex-1 items-center justify-center">
         {isIndeterminate
@@ -168,7 +153,6 @@ export const Checkbox = forwardRef<View, CheckboxProps>(
       </View>
     ) : null;
 
-    // Accessibility props for the checkbox
     const accessibilityProps = {
       role: "checkbox" as const,
       "aria-checked": isIndeterminate ? ("mixed" as const) : isChecked,
@@ -181,13 +165,10 @@ export const Checkbox = forwardRef<View, CheckboxProps>(
       },
     };
 
-    // Helper to style children (for asChild pattern)
     const styledChildren = (child: ReactNode): ReactNode => {
-      // Pass through non-element children
       return child;
     };
 
-    // asChild: render child element with checkbox styles, behavior, and indicator
     if (asChild && isValidElement(children)) {
       const child = children as ReactElement<{
         className?: string;
@@ -198,7 +179,6 @@ export const Checkbox = forwardRef<View, CheckboxProps>(
       }>;
       const childProps = child.props;
 
-      // Wrap the indicator and any child content in a View for proper flex layout
       const wrappedChildren = (
         <View className="flex-row items-center justify-center flex-1">
           {indicatorContent}

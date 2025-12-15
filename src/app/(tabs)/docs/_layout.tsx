@@ -4,12 +4,10 @@ import { Slot, Link, usePathname, type Href } from "expo-router";
 import { cn } from "@/lib/utils";
 import { SiteHeader } from "@/components/site-header";
 
-// Ensure deep links have proper back navigation
 export const unstable_settings = {
   initialRouteName: "index",
 };
 
-// Component registry for navigation
 const components = [
   { name: "Badge", href: "/docs/components/badge" },
   { name: "Button", href: "/docs/components/button" },
@@ -40,7 +38,6 @@ function DocsSidebar() {
       contentContainerClassName="py-6 px-4"
       showsVerticalScrollIndicator={false}
     >
-      {/* Getting Started */}
       <View className="mb-6">
         <Text bold className="text-sm text-foreground mb-2 px-2">
           Getting Started
@@ -71,7 +68,6 @@ function DocsSidebar() {
         })}
       </View>
 
-      {/* Components */}
       <View>
         <Text bold className="text-sm text-foreground mb-2 px-2">
           Components
@@ -110,23 +106,19 @@ export default function DocsLayout() {
   const isDesktop = width >= 768;
   const isWeb = Platform.OS === "web";
 
-  // On mobile native, just use Slot (tabs layout provides header/nav)
   if (!isWeb) {
     return <Slot />;
   }
 
-  // On web, use sidebar layout
   return (
     <View className="flex-1 bg-background">
       <SiteHeader />
       <View className="flex-1 flex-row">
-        {/* Desktop Sidebar - only shown on desktop */}
         {isDesktop && (
           <View className="w-64 border-r border-border">
             <DocsSidebar />
           </View>
         )}
-        {/* Main Content */}
         <View className="flex-1">
           <Slot />
         </View>

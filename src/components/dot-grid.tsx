@@ -9,7 +9,6 @@ interface DotGridProps {
 }
 
 export function DotGrid({ spacing = 24, dotSize = 1, opacity = 0.08 }: DotGridProps) {
-  // Use useResolveClassNames with text-foreground to get the foreground color
   const { color: foregroundColor } = useResolveClassNames("text-foreground");
 
   return (
