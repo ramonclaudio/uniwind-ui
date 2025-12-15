@@ -22,7 +22,10 @@ export function ComponentPreview({ children, className, roundedBottom = true }: 
         className="items-center justify-center"
         style={{ minHeight: 450, paddingVertical: 80, paddingHorizontal: 40 }}
       >
-        {children}
+        {/* Wrapper ensures children have width constraints for proper flex behavior on native */}
+        <View className="w-full max-w-md">
+          {children}
+        </View>
       </View>
     </View>
   );
@@ -92,7 +95,10 @@ export function ComponentPreviewTabs({
           className="items-center justify-center"
           style={{ minHeight: 450, paddingVertical: 80, paddingHorizontal: 40 }}
         >
-          {preview}
+          {/* Wrapper ensures children have width constraints for proper flex behavior on native */}
+          <View className="w-full max-w-md">
+            {preview}
+          </View>
         </View>
       ) : (
         <ScrollView
