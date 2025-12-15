@@ -205,7 +205,7 @@ export default function ComponentsIndex() {
       <View className="flex-row flex-wrap gap-4">
         {components.map((component) => (
           <Link key={component.href} href={component.href as Href} asChild>
-            <Pressable className="w-full sm:w-[calc(50%-8px)] rounded-xl border border-border bg-card overflow-hidden active:opacity-80">
+            <Pressable className="w-full sm:basis-[48%] sm:grow-0 rounded-xl border border-border bg-card overflow-hidden active:opacity-80">
               {/* Preview Area */}
               <View
                 className="h-40 items-center justify-center bg-muted/50 border-b border-border"
