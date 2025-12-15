@@ -69,9 +69,21 @@ npm start
 
 ## Requirements
 
-- React Native 0.81+
+**Core (all components):**
+- React Native 0.76+
 - Uniwind 1.0+
 - Tailwind CSS 4+
+- clsx
+- tailwind-merge
+
+**Per-component optional dependencies:**
+| Component | Additional Dependencies |
+|-----------|------------------------|
+| Select | react-native-dropdown-picker |
+| Checkbox | Any icon library (default: @expo/vector-icons) |
+| NavigationMenu | Any icon library + router (default: @expo/vector-icons, expo-router) |
+
+Expo is **not required**. The documentation site uses Expo, but the components work with any React Native setup.
 
 ## Using Components in Your Project
 
