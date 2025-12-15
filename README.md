@@ -1,38 +1,40 @@
 # Uniwind UI
 
-A 1:1 port of [shadcn/ui](https://ui.shadcn.com/) for React Native, built on [Uniwind](https://uniwind.dev/).
+shadcn/ui components for React Native, built on [Uniwind](https://uniwind.dev/).
 
-Copy and paste into your apps. Open Source. MIT License.
+I use shadcn/ui in every TypeScript project I build. When I started using Uniwind for React Native, I wanted the same experience: well-designed components I could copy, paste, and own. This didn't exist, so I built it.
+
+Copy the code. Modify it. Ship it.
 
 ## Components
 
 | Component | Description |
 |-----------|-------------|
 | Badge | Status indicators and labels |
-| Button | Pressable with variants (default, destructive, outline, secondary, ghost, link) |
-| Card | Container with header, content, footer composition |
-| Checkbox | Controlled/uncontrolled boolean input |
+| Button | 6 variants: default, destructive, outline, secondary, ghost, link |
+| Card | Header, content, footer composition |
+| Checkbox | Controlled/uncontrolled with indeterminate state |
 | Input | Text input with theme integration |
 | Label | Form labels |
-| Navigation Menu | App navigation with responsive collapse |
-| Select | Dropdown picker with groups |
-| Separator | Visual dividers |
+| Navigation Menu | Responsive collapse on smaller screens |
+| Select | Dropdown with groups and search |
+| Separator | Horizontal and vertical dividers |
 | Spinner | Loading indicator |
-| Text | Theme-aware text with font variants |
-| Textarea | Multi-line text input |
+| Text | Typography variants and font styles |
+| Textarea | Multi-line input |
 
 ## Usage
 
-1. Browse components at [`src/components/ui/`](src/components/ui/)
-2. Copy the component file into your project
-3. Copy [`src/lib/utils.ts`](src/lib/utils.ts) (provides the `cn` utility)
+1. Browse [`src/components/ui/`](src/components/ui/)
+2. Copy the component into your project
+3. Copy [`src/lib/utils.ts`](src/lib/utils.ts) for the `cn` utility
 4. Import and use
 
 ```tsx
 import { Button } from "@/components/ui/button";
 
-<Button variant="default" onPress={() => {}}>
-  Press me
+<Button variant="destructive" onPress={handleDelete}>
+  Delete
 </Button>
 ```
 
@@ -42,10 +44,9 @@ Your project needs:
 - React Native 0.76+
 - Uniwind 1.0+
 - Tailwind CSS 4+
-- clsx
-- tailwind-merge
+- clsx, tailwind-merge
 
-Some components have additional dependencies you can customize:
+Some components use Expo packages by default. Swap them for whatever you use:
 
 | Component | Default | Swap for |
 |-----------|---------|----------|
@@ -53,27 +54,16 @@ Some components have additional dependencies you can customize:
 | Checkbox | @expo/vector-icons | Any icon library |
 | NavigationMenu | @expo/vector-icons, expo-router | Any icon library, any router |
 
-## Why Uniwind?
+## Why Uniwind
 
-[Uniwind](https://uniwind.dev/) is the fastest Tailwind CSS implementation for React Native.
+[Uniwind](https://uniwind.dev/) is from the creators of Unistyles. It's the fastest Tailwind implementation for React Native—2x faster than alternatives. Styles are precomputed at build time. Zero runtime cost.
 
-- 2.5x faster than alternatives
-- Full Tailwind 4 support
-- TypeScript autocomplete
-- Platform variants (`ios:`, `android:`)
-- Zero runtime cost
-
-## Philosophy
-
-Inspired by [shadcn/ui](https://ui.shadcn.com/): copy the code, own it, modify it. No black-box dependencies.
-
-This is not an npm package. Not a framework. Just components you copy into your project.
+If you know Tailwind, you know Uniwind. Same classNames, native performance.
 
 ## Links
 
 - [Uniwind](https://uniwind.dev/)
 - [shadcn/ui](https://ui.shadcn.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
 
 ## Author
 
