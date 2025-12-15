@@ -7,7 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
- * - @/components/ui/text (Text component)
+ * - @/lib/fonts (font configuration)
  *
  * ## Usage
  *
@@ -19,10 +19,10 @@
  * ```
  */
 
-import { Text as RNText, type TextProps } from "react-native";
-import { Text } from "./text";
+import { Text as RNText, Platform, type TextProps } from "react-native";
 import { forwardRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { FONTS, FONT_CLASSES } from "@/lib/fonts";
 
 export interface LabelProps extends TextProps {
   children?: ReactNode;
@@ -30,16 +30,28 @@ export interface LabelProps extends TextProps {
 }
 
 export const Label = forwardRef<RNText, LabelProps>(
-  ({ children, className = "", ...props }, ref) => {
+  ({ children, className = "", style, ...props }, ref) => {
+    // On native (iOS/Android), we need inline fontFamily for Expo Go compatibility
+    // On web, className is sufficient
+    const platformStyle = Platform.select({
+      web: style,
+      default: [{ fontFamily: FONTS.regular }, style],
+    });
+
     return (
-      <Text
+      <RNText
         ref={ref}
         selectable={false}
-        className={cn("text-sm leading-none font-medium", className)}
+        className={cn(
+          FONT_CLASSES.regular,
+          "text-sm leading-none font-medium text-foreground",
+          className
+        )}
+        style={platformStyle}
         {...props}
       >
         {children}
-      </Text>
+      </RNText>
     );
   }
 );

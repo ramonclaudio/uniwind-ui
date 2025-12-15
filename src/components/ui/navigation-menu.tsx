@@ -7,6 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
+ * - @/lib/fonts (font configuration)
  * - @expo/vector-icons (for chevron icons)
  * - expo-router (for Link component)
  * - uniwind (for useCSSVariable)
@@ -36,14 +37,20 @@
  * ```
  */
 
-import { View, Pressable, Platform, useWindowDimensions, type ViewProps, type PressableProps, type LayoutChangeEvent, type GestureResponderEvent } from "react-native";
-import { Text } from "./text";
+import { View, Text as RNText, Pressable, Platform, useWindowDimensions, type ViewProps, type PressableProps, type LayoutChangeEvent, type GestureResponderEvent } from "react-native";
 import { forwardRef, createContext, useContext, useState, useEffect, useRef, useCallback, cloneElement, isValidElement, Children, type ReactNode, type ReactElement } from "react";
 import { cn } from "@/lib/utils";
+import { FONTS, FONT_CLASSES } from "@/lib/fonts";
 import { Link, type Href } from "expo-router";
 // To use a different icon library, change this import
 import { Ionicons } from "@expo/vector-icons";
 import { useCSSVariable } from "uniwind";
+
+// Platform-specific text style for native font rendering
+const platformTextStyle = Platform.select({
+  web: undefined,
+  default: { fontFamily: FONTS.regular },
+});
 
 /**
  * Get the displayName of a React element's type (minification-safe)
@@ -419,7 +426,7 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
                 "active:bg-accent"
               )}
             >
-              <Text className="text-sm text-foreground">{overflowLabel}</Text>
+              <RNText className={cn(FONT_CLASSES.regular, "text-sm text-foreground")} style={platformTextStyle}>{overflowLabel}</RNText>
               <ChevronIcon direction={isOverflowActive ? "up" : "down"} size={12} />
             </Pressable>
 
@@ -536,7 +543,7 @@ const OverflowSubmenu = ({ label, value, children }: OverflowSubmenuProps) => {
         )}
       >
         {typeof label === "string" ? (
-          <Text className="text-sm text-popover-foreground">{label}</Text>
+          <RNText className={cn(FONT_CLASSES.regular, "text-sm text-popover-foreground")} style={platformTextStyle}>{label}</RNText>
         ) : (
           label
         )}
@@ -661,7 +668,7 @@ export const NavigationMenuTrigger = forwardRef<View, NavigationMenuTriggerProps
         {...props}
       >
         {typeof children === "string" ? (
-          <Text className="text-sm text-foreground">{children}</Text>
+          <RNText className={cn(FONT_CLASSES.regular, "text-sm text-foreground")} style={platformTextStyle}>{children}</RNText>
         ) : (
           children
         )}
@@ -748,7 +755,7 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
 
     const renderContent = () => {
       if (typeof children === "string") {
-        return <Text className="text-sm text-popover-foreground">{children}</Text>;
+        return <RNText className={cn(FONT_CLASSES.regular, "text-sm text-popover-foreground")} style={platformTextStyle}>{children}</RNText>;
       }
       return children;
     };
@@ -778,10 +785,10 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
       );
     }
 
-    // Helper to style children with Text component for fonts
+    // Helper to style children with RNText for fonts
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
-        return <Text className="text-sm text-popover-foreground">{child}</Text>;
+        return <RNText className={cn(FONT_CLASSES.regular, "text-sm text-popover-foreground")} style={platformTextStyle}>{child}</RNText>;
       }
       return child;
     };

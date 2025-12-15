@@ -7,8 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
- * - @/components/ui/text (Text component)
- * - @/components/ui/spinner (Spinner component)
+ * - @/lib/fonts (font configuration)
  *
  * ## Usage
  *
@@ -29,11 +28,18 @@
  * - `<Badge asChild><Link>...</Link></Badge>` - Badge wraps Link
  */
 
-import { View, Text as RNText, Pressable, type ViewProps, type PressableProps } from "react-native";
-import { Text } from "./text";
+import {
+  View,
+  Text as RNText,
+  Pressable,
+  Platform,
+  ActivityIndicator,
+  type ViewProps,
+  type PressableProps,
+} from "react-native";
 import { forwardRef, isValidElement, cloneElement, Children, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { Spinner } from "./spinner";
+import { FONTS, FONT_CLASSES } from "@/lib/fonts";
 
 export const badgeVariants = {
   default: {
@@ -86,27 +92,34 @@ export const Badge = forwardRef<View, BadgeProps>(
       className
     );
 
+    // On native (iOS/Android), we need inline fontFamily for Expo Go compatibility
+    const platformTextStyle = Platform.select({
+      web: undefined,
+      default: { fontFamily: FONTS.regular },
+    });
+
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
         return (
-          <Text
-            className={cn("text-xs", variantStyles.text)}
+          <RNText
+            className={cn(FONT_CLASSES.regular, "text-xs", variantStyles.text)}
+            style={platformTextStyle}
           >
             {child}
-          </Text>
+          </RNText>
         );
       }
 
       if (isValidElement(child)) {
         const childProps = child.props as { className?: string; children?: ReactNode };
 
-        if (child.type === Spinner) {
+        if (child.type === ActivityIndicator) {
           return cloneElement(child as React.ReactElement<{ className?: string }>, {
             className: cn(variantStyles.text, childProps.className),
           });
         }
 
-        if (child.type === Text || child.type === RNText) {
+        if (child.type === RNText) {
           return cloneElement(child as React.ReactElement<{ className?: string }>, {
             className: cn(variantStyles.text, childProps.className),
           });

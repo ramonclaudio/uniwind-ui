@@ -7,7 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
- * - @/components/ui/text (Text component)
+ * - @/lib/fonts (font configuration)
  *
  * ## Usage
  *
@@ -36,10 +36,10 @@
  * ```
  */
 
-import { View, Text as RNText, type ViewProps, type TextProps } from "react-native";
-import { Text } from "./text";
+import { View, Text as RNText, Platform, type ViewProps, type TextProps } from "react-native";
 import { forwardRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { FONTS, FONT_CLASSES } from "@/lib/fonts";
 
 export interface CardProps extends ViewProps {
   children?: ReactNode;
@@ -101,15 +101,22 @@ export interface CardTitleProps extends TextProps {
 }
 
 export const CardTitle = forwardRef<RNText, CardTitleProps>(
-  ({ children, className = "", ...props }, ref) => {
+  ({ children, className = "", style, ...props }, ref) => {
+    // On native (iOS/Android), we need inline fontFamily for Expo Go compatibility
+    const platformStyle = Platform.select({
+      web: style,
+      default: [{ fontFamily: FONTS.regular }, style],
+    });
+
     return (
-      <Text
+      <RNText
         ref={ref}
-        className={cn("leading-none font-semibold", className)}
+        className={cn(FONT_CLASSES.regular, "leading-none font-semibold text-foreground", className)}
+        style={platformStyle}
         {...props}
       >
         {children}
-      </Text>
+      </RNText>
     );
   }
 );
@@ -121,15 +128,22 @@ export interface CardDescriptionProps extends TextProps {
 }
 
 export const CardDescription = forwardRef<RNText, CardDescriptionProps>(
-  ({ children, className = "", ...props }, ref) => {
+  ({ children, className = "", style, ...props }, ref) => {
+    // On native (iOS/Android), we need inline fontFamily for Expo Go compatibility
+    const platformStyle = Platform.select({
+      web: style,
+      default: [{ fontFamily: FONTS.regular }, style],
+    });
+
     return (
-      <Text
+      <RNText
         ref={ref}
-        className={cn("text-muted-foreground text-sm", className)}
+        className={cn(FONT_CLASSES.regular, "text-muted-foreground text-sm", className)}
+        style={platformStyle}
         {...props}
       >
         {children}
-      </Text>
+      </RNText>
     );
   }
 );

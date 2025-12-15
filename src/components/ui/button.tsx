@@ -7,8 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
- * - @/components/ui/text (Text component)
- * - @/components/ui/spinner (Spinner component)
+ * - @/lib/fonts (font configuration)
  * - uniwind (for useCSSVariable)
  *
  * ## Usage
@@ -36,10 +35,11 @@ import {
   Pressable,
   Text as RNText,
   View as RNView,
+  Platform,
+  ActivityIndicator,
   type PressableProps,
   type View,
 } from "react-native";
-import { Text } from "./text";
 import {
   forwardRef,
   isValidElement,
@@ -49,8 +49,8 @@ import {
   Children,
 } from "react";
 import { cn } from "@/lib/utils";
-import { Spinner } from "./spinner";
-import { useCSSVariable } from "uniwind";
+import { FONTS, FONT_CLASSES } from "@/lib/fonts";
+import { useCSSVariable, useResolveClassNames } from "uniwind";
 
 // Mapping from button variant to CSS variable for icon colors
 // Uses useCSSVariable for efficient single subscription per variant
@@ -169,30 +169,52 @@ export const Button = forwardRef<View, ButtonProps>(
     // For destructive variant, use white; otherwise use the CSS variable color
     const iconColor = cssVarName === null ? "#ffffff" : cssVarColor;
 
+    // Inline spinner component using ActivityIndicator
+    const ButtonSpinner = ({ className: spinnerClassName }: { className?: string }) => {
+      const defaultColor = useCSSVariable("--color-foreground") as string;
+      const customStyles = useResolveClassNames(spinnerClassName || "");
+      const resolvedColor = (customStyles.color as string) || defaultColor || "#000";
+      return (
+        <ActivityIndicator
+          size="small"
+          className={spinnerClassName}
+          color={resolvedColor}
+        />
+      );
+    };
+
+    // On native (iOS/Android), we need inline fontFamily for Expo Go compatibility
+    const platformTextStyle = Platform.select({
+      web: undefined,
+      default: { fontFamily: FONTS.regular },
+    });
+
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
         return (
-          <Text
+          <RNText
             className={cn(
+              FONT_CLASSES.regular,
               sizeStyles.text,
               variantStyles.text
             )}
+            style={platformTextStyle}
           >
             {child}
-          </Text>
+          </RNText>
         );
       }
 
       if (isValidElement(child)) {
         const childProps = child.props as { className?: string; children?: ReactNode; color?: string };
 
-        if (child.type === Spinner) {
+        if (child.type === ActivityIndicator) {
           return cloneElement(child as ReactElement<{ className?: string }>, {
             className: cn(variantStyles.text, childProps.className),
           });
         }
 
-        if (child.type === Text || child.type === RNText) {
+        if (child.type === RNText) {
           return cloneElement(child as ReactElement<{ className?: string }>, {
             className: cn(variantStyles.text, childProps.className),
           });
@@ -237,7 +259,7 @@ export const Button = forwardRef<View, ButtonProps>(
       // parent element (e.g., Link on web doesn't always support flex properly)
       const wrappedChildren = childProps.children ? (
         <RNView className="flex-1 h-full flex-row items-center justify-center gap-2">
-          {loading && <Spinner className={variantStyles.text} />}
+          {loading && <ButtonSpinner className={variantStyles.text} />}
           {Children.map(childProps.children, styledChildren)}
         </RNView>
       ) : undefined;
@@ -258,7 +280,7 @@ export const Button = forwardRef<View, ButtonProps>(
         className={buttonClassName}
         {...props}
       >
-        {loading && <Spinner className={variantStyles.text} />}
+        {loading && <ButtonSpinner className={variantStyles.text} />}
         {children != null && Children.map(children, styledChildren)}
       </Pressable>
     );
