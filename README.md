@@ -10,33 +10,24 @@ Copy the code. Modify it. Ship it.
 
 | Component | Description |
 |-----------|-------------|
-| Badge | Status indicators and labels |
-| Button | 6 variants: default, destructive, outline, secondary, ghost, link |
-| Card | Header, content, footer composition |
-| Checkbox | Controlled/uncontrolled with indeterminate state |
-| Input | Text input with theme integration |
-| Label | Form labels |
-| Navigation Menu | Responsive collapse on smaller screens |
-| Select | Dropdown with groups and search |
-| Separator | Horizontal and vertical dividers |
-| Spinner | Loading indicator |
-| Text | Typography variants and font styles |
-| Textarea | Multi-line input |
+| [Badge](src/components/ui/badge.tsx) | Status indicators and labels |
+| [Button](src/components/ui/button.tsx) | 6 variants: default, destructive, outline, secondary, ghost, link |
+| [Card](src/components/ui/card.tsx) | Header, content, footer composition |
+| [Checkbox](src/components/ui/checkbox.tsx) | Controlled/uncontrolled with indeterminate state |
+| [Input](src/components/ui/input.tsx) | Text input with theme integration |
+| [Label](src/components/ui/label.tsx) | Form labels |
+| [Navigation Menu](src/components/ui/navigation-menu.tsx) | Responsive collapse on smaller screens |
+| [Select](src/components/ui/select.tsx) | Dropdown with groups and search |
+| [Separator](src/components/ui/separator.tsx) | Horizontal and vertical dividers |
+| [Spinner](src/components/ui/spinner.tsx) | Loading indicator |
+| [Text](src/components/ui/text.tsx) | Typography variants and font styles |
+| [Textarea](src/components/ui/textarea.tsx) | Multi-line input |
 
 ## Usage
 
-1. Browse [`src/components/ui/`](src/components/ui/)
-2. Copy the component into your project
-3. Copy [`src/lib/utils.ts`](src/lib/utils.ts) for the `cn` utility
-4. Import and use
-
-```tsx
-import { Button } from "@/components/ui/button";
-
-<Button variant="destructive" onPress={handleDelete}>
-  Delete
-</Button>
-```
+1. Copy the component you need from [`src/components/ui/`](src/components/ui/)
+2. Copy [`src/lib/utils.ts`](src/lib/utils.ts) into your project (required for the `cn` utility)
+3. Import and use
 
 ## Requirements
 
@@ -56,7 +47,7 @@ Additional dependencies:
 
 ## Why Uniwind
 
-[Uniwind](https://uniwind.dev/) is from the creators of Unistyles. It's the fastest Tailwind implementation for React Native—2x faster than alternatives. Styles are precomputed at build time. Zero runtime cost.
+[Uniwind](https://uniwind.dev/) is from the creators of Unistyles. It's the fastest Tailwind implementation for React Native, 2x faster than alternatives. Styles are precomputed at build time. Zero runtime cost.
 
 If you know Tailwind, you know Uniwind. Same classNames, native performance.
 
