@@ -32,9 +32,10 @@ export default function CardPage() {
       <ComponentHeader component={component} />
 
       <ComponentDemo
-        code={`import { View, Text, Pressable } from "react-native"
+        code={`import { View, Pressable } from "react-native"
+import { Text } from "@/components/ui/text"
+import { Button } from "@/components/ui/button"
 import {
-  Button,
   Card,
   CardHeader,
   CardTitle,
@@ -42,9 +43,9 @@ import {
   CardAction,
   CardContent,
   CardFooter,
-  Input,
-  Label,
 } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 export function CardDemo() {
   return (
