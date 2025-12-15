@@ -97,7 +97,9 @@ export const Badge = forwardRef<View, BadgeProps>(
     );
 
     // Resolve font family from CSS variable for native platforms
-    const fontFamily = useCSSVariable("--font-sans") as string;
+    // Extract just the first font name (removes web fallbacks)
+    const rawFontFamily = useCSSVariable("--font-sans") as string;
+    const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
     // Resolve variant color from CSS variable for icons and spinners

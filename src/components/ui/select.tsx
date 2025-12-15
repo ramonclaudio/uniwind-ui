@@ -301,7 +301,9 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
     const pickerKey = `dropdown-${theme}-${card || 'init'}`;
 
     // Resolve font family from CSS variable for native platforms
-    const fontFamily = useCSSVariable("--font-sans") as string | undefined;
+    // Extract just the first font name (removes web fallbacks)
+    const rawFontFamily = useCSSVariable("--font-sans") as string | undefined;
+    const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
 
     const pickerItems: ItemType<string>[] = items.map((item) => ({
       label: item.label,

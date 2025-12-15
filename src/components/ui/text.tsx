@@ -96,7 +96,11 @@ export const Text = forwardRef<RNText, TextProps>(
     const variantClass = variant ? VARIANT_CLASSES[variant] : "";
 
     // Resolve font family from CSS variable for native platforms
-    const fontFamily = useCSSVariable(cssVar) as string;
+    const rawFontFamily = useCSSVariable(cssVar) as string;
+
+    // Extract just the first font name (removes web fallbacks like "ui-monospace, monospace")
+    // CSS font-family values are comma-separated, but native needs just one font name
+    const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
 
     // On native, apply fontFamily as inline style; on web, className is sufficient
     const platformStyle = Platform.select({

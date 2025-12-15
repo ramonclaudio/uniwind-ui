@@ -7,6 +7,14 @@
   Useful for third-party libraries (charts, maps, etc.)
 */
 @theme static {
+  /* Font families - must be in static for useCSSVariable() access */
+  /* Names must match font file names exactly (without extension) */
+  --font-sans: SpaceMono-Regular;
+  --font-sans-bold: SpaceMono-Bold;
+  --font-sans-italic: SpaceMono-Italic;
+  --font-sans-bold-italic: SpaceMono-BoldItalic;
+  --font-mono: SpaceMono-Regular;
+
   /* Chart configuration */
   --chart-line-width: 2;
   --chart-dot-radius: 4;
@@ -35,15 +43,6 @@
 
   Uniwind uses @variant light/dark inside @layer theme instead of :root/.dark
 */
-
-@theme {
-  /* Font families - names must match font file names exactly (without extension) */
-  --font-sans: 'SpaceMono-Regular';
-  --font-sans-bold: 'SpaceMono-Bold';
-  --font-sans-italic: 'SpaceMono-Italic';
-  --font-sans-bold-italic: 'SpaceMono-BoldItalic';
-  --font-mono: 'SpaceMono-Regular';
-}
 
 @layer theme {
   :root {

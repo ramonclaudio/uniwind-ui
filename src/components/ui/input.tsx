@@ -35,7 +35,9 @@ export const Input = forwardRef<TextInput, InputProps>(
     const isDisabled = editable === false;
 
     // Resolve font family from CSS variable for native platforms
-    const fontFamily = useCSSVariable("--font-sans") as string;
+    // Extract just the first font name (removes web fallbacks)
+    const rawFontFamily = useCSSVariable("--font-sans") as string;
+    const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const platformStyle = Platform.select({
       web: style,
       default: fontFamily ? [{ fontFamily }, style] : style,

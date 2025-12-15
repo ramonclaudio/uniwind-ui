@@ -317,7 +317,9 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
     const childArray = Children.toArray(children);
 
     // Resolve font family from CSS variable for native platforms
-    const fontFamily = useCSSVariable("--font-sans") as string;
+    // Extract just the first font name (removes web fallbacks)
+    const rawFontFamily = useCSSVariable("--font-sans") as string;
+    const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
     // Register expected item count for measurement
@@ -520,7 +522,9 @@ const OverflowSubmenu = ({ label, value, children }: OverflowSubmenuProps) => {
   const { setActiveItem } = useContext(NavigationMenuContext);
 
   // Resolve font family from CSS variable for native platforms
-  const fontFamily = useCSSVariable("--font-sans") as string;
+  // Extract just the first font name (removes web fallbacks)
+  const rawFontFamily = useCSSVariable("--font-sans") as string;
+  const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
   const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
   const handlePress = () => {
@@ -634,7 +638,9 @@ export const NavigationMenuTrigger = forwardRef<View, NavigationMenuTriggerProps
     const [iconDirection, setIconDirection] = useState<"up" | "down">("down");
 
     // Resolve font family from CSS variable for native platforms
-    const fontFamily = useCSSVariable("--font-sans") as string;
+    // Extract just the first font name (removes web fallbacks)
+    const rawFontFamily = useCSSVariable("--font-sans") as string;
+    const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
     // Delay icon animation after menu state changes
@@ -746,7 +752,9 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
     const [isHovered, setIsHovered] = useState(false);
 
     // Resolve font family from CSS variable for native platforms
-    const fontFamily = useCSSVariable("--font-sans") as string;
+    // Extract just the first font name (removes web fallbacks)
+    const rawFontFamily = useCSSVariable("--font-sans") as string;
+    const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
     const handlePress: PressableProps["onPress"] = (e) => {
