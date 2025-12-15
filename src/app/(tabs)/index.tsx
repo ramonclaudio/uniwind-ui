@@ -610,7 +610,7 @@ function CheckboxDemo() {
               onCheckedChange={setCardChecked}
               className={cardChecked === true ? "border-info bg-info text-info-foreground" : ""}
             />
-            <View className="flex-1 flex-col gap-1.5">
+            <View className="flex-1 min-w-0 flex-col gap-1.5">
               <Text className="text-sm leading-none text-foreground">
                 Enable notifications
               </Text>

@@ -30,7 +30,7 @@ function CheckboxCard() {
         onCheckedChange={setChecked}
         className={checked === true ? "border-info bg-info text-info-foreground" : ""}
       />
-      <View className="flex-1 flex-col gap-1.5">
+      <View className="flex-1 min-w-0 flex-col gap-1.5">
         <Text className="text-sm leading-none text-foreground">
           Enable notifications
         </Text>
@@ -97,8 +97,8 @@ export function CheckboxDemo() {
           onCheckedChange={setChecked}
           className={checked === true ? "border-info bg-info text-info-foreground" : ""}
         />
-        <View className="flex-1 flex-col gap-1.5 font-normal">
-          <Text className="text-sm font-normal leading-none text-foreground">
+        <View className="flex-1 min-w-0 flex-col gap-1.5">
+          <Text className="text-sm leading-none text-foreground">
             Enable notifications
           </Text>
           <Text className="text-sm text-muted-foreground">
