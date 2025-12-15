@@ -9,6 +9,7 @@ import {
   ComponentDemo,
   ComponentUsage,
   ComponentApiReference,
+  ComponentNote,
   ComponentSourceSection,
   Installation,
 } from "@/components/docs";
@@ -49,8 +50,9 @@ export default function CheckboxPage() {
       <ComponentHeader component={component} />
 
       <ComponentDemo
-        code={`import { View, Text, Pressable } from "react-native"
+        code={`import { View, Pressable } from "react-native"
 import { useState } from "react"
+import { Text } from "@/components/ui/text"
 import { Checkbox, type CheckedState } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
@@ -161,6 +163,10 @@ export function CheckboxDemo() {
           { name: "asChild", type: "boolean", default: "false", description: "Render as child element, passing checkbox styles and behavior to it" },
         ]}
       />
+
+      <ComponentNote>
+        The Text component from @/components/ui/text is recommended for consistent styling, but React Native's built-in Text component works as a fallback.
+      </ComponentNote>
 
       <ComponentSourceSection component={component} />
     </DocsPage>
