@@ -34,6 +34,7 @@ import {
   Pressable,
   Text as RNText,
   View as RNView,
+  Platform,
   ActivityIndicator,
   type PressableProps,
   type View,
@@ -166,6 +167,10 @@ export const Button = forwardRef<View, ButtonProps>(
     // For destructive variant, use white; otherwise use the CSS variable color
     const iconColor = cssVarName === null ? "#ffffff" : cssVarColor;
 
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
+    const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
+
     // Inline spinner component using ActivityIndicator
     const ButtonSpinner = ({ className: spinnerClassName }: { className?: string }) => {
       const defaultColor = useCSSVariable("--color-foreground") as string;
@@ -189,6 +194,7 @@ export const Button = forwardRef<View, ButtonProps>(
               sizeStyles.text,
               variantStyles.text
             )}
+            style={nativeFontStyle}
           >
             {child}
           </RNText>

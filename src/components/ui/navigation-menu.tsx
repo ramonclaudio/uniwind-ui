@@ -316,6 +316,10 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
     const { activeItem, setActiveItem } = useContext(NavigationMenuContext);
     const childArray = Children.toArray(children);
 
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
+    const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
+
     // Register expected item count for measurement
     useEffect(() => {
       registerExpectedCount(childArray.length);
@@ -418,7 +422,7 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
                 "active:bg-accent"
               )}
             >
-              <RNText className="font-sans text-sm text-foreground">{overflowLabel}</RNText>
+              <RNText className="font-sans text-sm text-foreground" style={nativeFontStyle}>{overflowLabel}</RNText>
               <ChevronIcon direction={isOverflowActive ? "up" : "down"} size={12} />
             </Pressable>
 
@@ -515,6 +519,10 @@ const OverflowSubmenu = ({ label, value, children }: OverflowSubmenuProps) => {
   const [expanded, setExpanded] = useState(false);
   const { setActiveItem } = useContext(NavigationMenuContext);
 
+  // Resolve font family from CSS variable for native platforms
+  const fontFamily = useCSSVariable("--font-sans") as string;
+  const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
+
   const handlePress = () => {
     setExpanded(!expanded);
   };
@@ -535,7 +543,7 @@ const OverflowSubmenu = ({ label, value, children }: OverflowSubmenuProps) => {
         )}
       >
         {typeof label === "string" ? (
-          <RNText className="font-sans text-sm text-popover-foreground">{label}</RNText>
+          <RNText className="font-sans text-sm text-popover-foreground" style={nativeFontStyle}>{label}</RNText>
         ) : (
           label
         )}
@@ -625,6 +633,10 @@ export const NavigationMenuTrigger = forwardRef<View, NavigationMenuTriggerProps
     const isActive = value ? activeItem === value : false;
     const [iconDirection, setIconDirection] = useState<"up" | "down">("down");
 
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
+    const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
+
     // Delay icon animation after menu state changes
     useEffect(() => {
       const timeout = setTimeout(() => {
@@ -660,7 +672,7 @@ export const NavigationMenuTrigger = forwardRef<View, NavigationMenuTriggerProps
         {...props}
       >
         {typeof children === "string" ? (
-          <RNText className="font-sans text-sm text-foreground">{children}</RNText>
+          <RNText className="font-sans text-sm text-foreground" style={nativeFontStyle}>{children}</RNText>
         ) : (
           children
         )}
@@ -733,6 +745,10 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
     const { setActiveItem } = useContext(NavigationMenuContext);
     const [isHovered, setIsHovered] = useState(false);
 
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
+    const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
+
     const handlePress: PressableProps["onPress"] = (e) => {
       setIsHovered(false); // Reset hover on press
       setActiveItem(null); // Close menu on link press
@@ -747,7 +763,7 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
 
     const renderContent = () => {
       if (typeof children === "string") {
-        return <RNText className="font-sans text-sm text-popover-foreground">{children}</RNText>;
+        return <RNText className="font-sans text-sm text-popover-foreground" style={nativeFontStyle}>{children}</RNText>;
       }
       return children;
     };
@@ -780,7 +796,7 @@ export const NavigationMenuLink = forwardRef<View, NavigationMenuLinkProps>(
     // Helper to style children with RNText for fonts
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
-        return <RNText className="font-sans text-sm text-popover-foreground">{child}</RNText>;
+        return <RNText className="font-sans text-sm text-popover-foreground" style={nativeFontStyle}>{child}</RNText>;
       }
       return child;
     };

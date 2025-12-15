@@ -7,6 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
+ * - uniwind (for useCSSVariable)
  *
  * ## Usage
  *
@@ -35,9 +36,10 @@
  * ```
  */
 
-import { View, Text as RNText, type ViewProps, type TextProps } from "react-native";
+import { View, Text as RNText, Platform, type ViewProps, type TextProps } from "react-native";
 import { forwardRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useCSSVariable } from "uniwind";
 
 export interface CardProps extends ViewProps {
   children?: ReactNode;
@@ -99,11 +101,19 @@ export interface CardTitleProps extends TextProps {
 }
 
 export const CardTitle = forwardRef<RNText, CardTitleProps>(
-  ({ children, className = "", ...props }, ref) => {
+  ({ children, className = "", style, ...props }, ref) => {
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
+    const platformStyle = Platform.select({
+      web: style,
+      default: fontFamily ? [{ fontFamily }, style] : style,
+    });
+
     return (
       <RNText
         ref={ref}
         className={cn("font-sans leading-none font-semibold text-foreground", className)}
+        style={platformStyle}
         {...props}
       >
         {children}
@@ -119,11 +129,19 @@ export interface CardDescriptionProps extends TextProps {
 }
 
 export const CardDescription = forwardRef<RNText, CardDescriptionProps>(
-  ({ children, className = "", ...props }, ref) => {
+  ({ children, className = "", style, ...props }, ref) => {
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
+    const platformStyle = Platform.select({
+      web: style,
+      default: fontFamily ? [{ fontFamily }, style] : style,
+    });
+
     return (
       <RNText
         ref={ref}
         className={cn("font-sans text-muted-foreground text-sm", className)}
+        style={platformStyle}
         {...props}
       >
         {children}

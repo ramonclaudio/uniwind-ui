@@ -7,6 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
+ * - uniwind (for useCSSVariable)
  *
  * ## Usage
  *
@@ -31,12 +32,14 @@ import {
   View,
   Text as RNText,
   Pressable,
+  Platform,
   ActivityIndicator,
   type ViewProps,
   type PressableProps,
 } from "react-native";
 import { forwardRef, isValidElement, cloneElement, Children, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useCSSVariable } from "uniwind";
 
 export const badgeVariants = {
   default: {
@@ -89,11 +92,16 @@ export const Badge = forwardRef<View, BadgeProps>(
       className
     );
 
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
+    const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
+
     const styledChildren = (child: ReactNode): ReactNode => {
       if (typeof child === "string") {
         return (
           <RNText
             className={cn("font-sans text-xs", variantStyles.text)}
+            style={nativeFontStyle}
           >
             {child}
           </RNText>

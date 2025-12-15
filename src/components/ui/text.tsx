@@ -7,6 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
+ * - uniwind (for useCSSVariable)
  *
  * ## Usage
  *
@@ -31,9 +32,10 @@
  * ```
  */
 
-import { Text as RNText, type TextProps as RNTextProps } from "react-native";
+import { Text as RNText, Platform, type TextProps as RNTextProps } from "react-native";
 import { forwardRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useCSSVariable } from "uniwind";
 
 /**
  * Typography Variants
@@ -56,15 +58,15 @@ const VARIANT_CLASSES = {
 
 type TypographyVariant = keyof typeof VARIANT_CLASSES;
 
-/** Font classes that reference CSS --font-* variables */
-const FONT_CLASSES = {
-  regular: "font-sans",
-  bold: "font-sans-bold",
-  italic: "font-sans-italic",
-  boldItalic: "font-sans-bold-italic",
+/** Font configuration - classes and CSS variables */
+const FONT_CONFIG = {
+  regular: { class: "font-sans", cssVar: "--font-sans" },
+  bold: { class: "font-sans-bold", cssVar: "--font-sans-bold" },
+  italic: { class: "font-sans-italic", cssVar: "--font-sans-italic" },
+  boldItalic: { class: "font-sans-bold-italic", cssVar: "--font-sans-bold-italic" },
 } as const;
 
-type FontVariant = keyof typeof FONT_CLASSES;
+type FontVariant = keyof typeof FONT_CONFIG;
 
 export interface TextProps extends RNTextProps {
   children?: ReactNode;
@@ -88,14 +90,25 @@ function getFontVariant(bold?: boolean, italic?: boolean): FontVariant {
 }
 
 export const Text = forwardRef<RNText, TextProps>(
-  ({ children, className = "", bold, italic, variant, ...props }, ref) => {
-    const fontClass = FONT_CLASSES[getFontVariant(bold, italic)];
+  ({ children, className = "", style, bold, italic, variant, ...props }, ref) => {
+    const fontVariant = getFontVariant(bold, italic);
+    const { class: fontClass, cssVar } = FONT_CONFIG[fontVariant];
     const variantClass = variant ? VARIANT_CLASSES[variant] : "";
+
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable(cssVar) as string;
+
+    // On native, apply fontFamily as inline style; on web, className is sufficient
+    const platformStyle = Platform.select({
+      web: style,
+      default: fontFamily ? [{ fontFamily }, style] : style,
+    });
 
     return (
       <RNText
         ref={ref}
         className={cn(fontClass, "text-foreground", variantClass, className)}
+        style={platformStyle}
         {...props}
       >
         {children}

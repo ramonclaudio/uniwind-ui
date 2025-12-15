@@ -7,6 +7,7 @@
  * ## Dependencies
  *
  * - @/lib/utils (cn function)
+ * - uniwind (for useCSSVariable)
  *
  * ## Usage
  *
@@ -18,9 +19,10 @@
  * ```
  */
 
-import { Text as RNText, type TextProps } from "react-native";
+import { Text as RNText, Platform, type TextProps } from "react-native";
 import { forwardRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useCSSVariable } from "uniwind";
 
 export interface LabelProps extends TextProps {
   children?: ReactNode;
@@ -28,7 +30,14 @@ export interface LabelProps extends TextProps {
 }
 
 export const Label = forwardRef<RNText, LabelProps>(
-  ({ children, className = "", ...props }, ref) => {
+  ({ children, className = "", style, ...props }, ref) => {
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string;
+    const platformStyle = Platform.select({
+      web: style,
+      default: fontFamily ? [{ fontFamily }, style] : style,
+    });
+
     return (
       <RNText
         ref={ref}
@@ -37,6 +46,7 @@ export const Label = forwardRef<RNText, LabelProps>(
           "font-sans text-sm leading-none font-medium text-foreground",
           className
         )}
+        style={platformStyle}
         {...props}
       >
         {children}

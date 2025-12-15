@@ -62,8 +62,6 @@ import {
 import { cn } from "@/lib/utils";
 import { useCSSVariable, useUniwind } from "uniwind";
 
-const FONT_FAMILY: string | undefined = "SpaceMono-Regular";
-
 interface SelectItemData {
   value: string;
   label: string;
@@ -302,7 +300,8 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
     // Key includes card color to force re-render when colors resolve
     const pickerKey = `dropdown-${theme}-${card || 'init'}`;
 
-    const fontFamily = FONT_FAMILY;
+    // Resolve font family from CSS variable for native platforms
+    const fontFamily = useCSSVariable("--font-sans") as string | undefined;
 
     const pickerItems: ItemType<string>[] = items.map((item) => ({
       label: item.label,
