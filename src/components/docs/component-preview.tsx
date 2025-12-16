@@ -27,7 +27,7 @@ export function ComponentPreview({ children, className, roundedBottom = true }: 
         }}
       >
         {/* Wrapper ensures children have width constraints for proper flex behavior on native */}
-        <View className="w-full max-w-md">
+        <View className="w-full max-w-md items-center">
           {children}
         </View>
       </View>
@@ -102,7 +102,7 @@ export function ComponentPreviewTabs({
           }}
         >
           {/* Wrapper ensures children have width constraints for proper flex behavior on native */}
-          <View className="w-full max-w-md">
+          <View className="w-full max-w-md items-center">
             {preview}
           </View>
         </View>
