@@ -33,7 +33,7 @@ export default function NavigationMenuPage() {
 
       <View className="mb-8">
         <ComponentPreview>
-          <View className="w-full items-center" style={{ marginTop: -350 }}>
+          <View className="w-full items-center">
             <NavigationMenu minVisibleItems={1}>
               <NavigationMenuList overflowLabel="More">
                 <NavigationMenuItem value="getting-started">
