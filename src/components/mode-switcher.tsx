@@ -1,5 +1,5 @@
 import { Pressable } from "react-native";
-import { Uniwind, useUniwind } from "uniwind";
+import { Uniwind, useUniwind, useCSSVariable } from "uniwind";
 import { saveTheme } from "@/app/_layout";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 export function ModeSwitcher({ className }: { className?: string }) {
   const { theme, hasAdaptiveThemes } = useUniwind();
   const activeTheme = hasAdaptiveThemes ? "system" : theme;
+  const foregroundColor = useCSSVariable("--color-foreground") as string;
 
   const toggleTheme = async () => {
     let newTheme: "light" | "dark" | "system";
@@ -39,7 +40,7 @@ export function ModeSwitcher({ className }: { className?: string }) {
       accessibilityLabel={`Current theme: ${activeTheme}. Tap to change.`}
       accessibilityRole="button"
     >
-      <IconComponent width={18} height={18} className="accent-foreground" />
+      <IconComponent width={18} height={18} color={foregroundColor} />
     </Pressable>
   );
 }
