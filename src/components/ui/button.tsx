@@ -52,7 +52,7 @@ import { useCSSVariable, useResolveClassNames } from "uniwind";
 
 const variantColorMap = {
   default: "--color-primary-foreground",
-  destructive: "--color-destructive-foreground",
+  destructive: "--color-primary-foreground",
   outline: "--color-foreground",
   secondary: "--color-secondary-foreground",
   ghost: "--color-foreground",
@@ -66,7 +66,7 @@ export const buttonVariants = {
   },
   destructive: {
     button: "bg-destructive active:bg-destructive/90 web:hover:bg-destructive/90",
-    text: "text-destructive-foreground font-medium",
+    text: "text-primary-foreground font-medium",
   },
   outline: {
     button: "border border-border bg-background shadow-xs active:bg-accent web:hover:bg-accent web:hover:text-accent-foreground",

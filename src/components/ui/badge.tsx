@@ -54,8 +54,8 @@ export const badgeVariants = {
   },
   destructive: {
     container: "border-transparent bg-destructive",
-    text: "text-destructive-foreground font-medium",
-    colorVar: "--color-destructive-foreground",
+    text: "text-primary-foreground font-medium",
+    colorVar: "--color-primary-foreground",
   },
   outline: {
     container: "border-border",

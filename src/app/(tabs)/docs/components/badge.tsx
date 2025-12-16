@@ -48,7 +48,7 @@ export function BadgeDemo() {
           className="h-5 min-w-5 justify-center rounded-full px-1.5"
           variant="destructive"
         >
-          <Text className="text-xs font-mono text-destructive-foreground">99</Text>
+          <Text className="text-xs font-mono text-primary-foreground">99</Text>
         </Badge>
         <Badge
           className="h-5 min-w-5 justify-center rounded-full px-1.5"
@@ -80,7 +80,7 @@ export function BadgeDemo() {
               className="h-5 min-w-5 justify-center rounded-full px-1.5"
               variant="destructive"
             >
-              <Text className="text-xs font-mono text-destructive-foreground">99</Text>
+              <Text className="text-xs font-mono text-primary-foreground">99</Text>
             </Badge>
             <Badge
               className="h-5 min-w-5 justify-center rounded-full px-1.5"
