@@ -262,16 +262,16 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
     const { theme } = useUniwind();
 
     const [
-      cardColor,
-      cardFgColor,
+      popoverColor,
+      popoverFgColor,
       borderColor,
       foregroundColor,
       mutedFgColor,
       accentColor,
       accentFgColor,
     ] = useCSSVariable([
-      "--color-card",
-      "--color-card-foreground",
+      "--color-popover",
+      "--color-popover-foreground",
       "--color-border",
       "--color-foreground",
       "--color-muted-foreground",
@@ -279,15 +279,21 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
       "--color-accent-foreground",
     ]) as string[];
 
-    const card = cardColor;
-    const cardForeground = cardFgColor;
+    const popover = popoverColor;
+    const popoverForeground = popoverFgColor;
     const border = borderColor;
     const foreground = foregroundColor;
     const mutedForeground = mutedFgColor;
     const accent = accentColor;
     const accentForeground = accentFgColor;
 
-    const pickerKey = `dropdown-${theme}-${card || 'init'}`;
+    // Trigger background: use popover color to match dropdown appearance
+    const triggerBg = popover;
+
+    // Don't render picker until CSS variables are loaded
+    const colorsLoaded = popover && border && foreground;
+
+    const pickerKey = `dropdown-${theme}-${popover || 'init'}`;
 
     const rawFontFamily = useCSSVariable("--font-sans") as string | undefined;
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
@@ -353,7 +359,7 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
         >
           <Text
             style={{
-              color: cardForeground,
+              color: popoverForeground,
               fontSize: 14,
               fontWeight: "400",
               fontFamily: fontFamily,
@@ -373,7 +379,7 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
                 justifyContent: "center",
               }}
             >
-              <Text style={{ fontSize: 12, color: cardForeground, fontFamily: fontFamily }}>✓</Text>
+              <Text style={{ fontSize: 12, color: popoverForeground, fontFamily: fontFamily }}>✓</Text>
             </View>
           )}
         </Pressable>
@@ -401,6 +407,14 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [open, setOpen]);
+
+    if (!colorsLoaded) {
+      return (
+        <View ref={containerRef} className={cn("z-50", className)} {...props}>
+          {children}
+        </View>
+      );
+    }
 
     return (
       <View ref={containerRef} className={cn("z-50", className)} {...props}>
@@ -434,7 +448,7 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
           zIndex={5000}
           zIndexInverse={4000}
           style={{
-            backgroundColor: card,
+            backgroundColor: triggerBg,
             borderColor: border,
             borderWidth: 1,
             borderRadius: 6,
@@ -444,7 +458,7 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
             opacity: disabled ? 0.5 : 1,
           }}
           dropDownContainerStyle={{
-            backgroundColor: card,
+            backgroundColor: popover,
             borderColor: border,
             borderWidth: 1,
             borderRadius: 6,
@@ -473,7 +487,7 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
             fontFamily: fontFamily,
           }}
           listItemLabelStyle={{
-            color: cardForeground,
+            color: popoverForeground,
             fontWeight: "normal",
             fontFamily: fontFamily,
           }}
