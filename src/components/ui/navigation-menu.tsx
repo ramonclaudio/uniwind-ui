@@ -97,6 +97,14 @@ function useIconColor(): string {
   return color;
 }
 
+function usePopoverColors() {
+  const [popoverBg, borderColor] = useCSSVariable([
+    "--color-popover",
+    "--color-border",
+  ]) as string[];
+  return { popoverBg, borderColor };
+}
+
 function calculateVisibleCount(
   itemWidths: Map<number, number>,
   availableWidth: number,
