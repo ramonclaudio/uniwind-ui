@@ -1,4 +1,4 @@
-import { View, Pressable, ScrollView } from "react-native";
+import { View, Pressable, ScrollView, Platform } from "react-native";
 import { Text } from "@/components/ui/text";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,11 @@ export function ComponentPreview({ children, className, roundedBottom = true }: 
     >
       <View
         className="items-center justify-center"
-        style={{ minHeight: 450, paddingVertical: 80, paddingHorizontal: 40 }}
+        style={{
+          minHeight: Platform.OS === "web" ? 550 : 450,
+          paddingVertical: 80,
+          paddingHorizontal: 40,
+        }}
       >
         {/* Wrapper ensures children have width constraints for proper flex behavior on native */}
         <View className="w-full max-w-md">
@@ -91,7 +95,11 @@ export function ComponentPreviewTabs({
       {activeTab === "preview" ? (
         <View
           className="items-center justify-center"
-          style={{ minHeight: 450, paddingVertical: 80, paddingHorizontal: 40 }}
+          style={{
+            minHeight: Platform.OS === "web" ? 550 : 450,
+            paddingVertical: 80,
+            paddingHorizontal: 40,
+          }}
         >
           {/* Wrapper ensures children have width constraints for proper flex behavior on native */}
           <View className="w-full max-w-md">
