@@ -38,16 +38,22 @@ export const StyledIonicons = withUniwind(BaseIonicons);
 type StyledPathProps = Omit<PathProps, "stroke" | "fill"> & {
   strokeClassName?: string;
   fillClassName?: string;
+  stroke?: string;
+  fill?: string;
 };
 
 type StyledRectProps = Omit<RectProps, "stroke" | "fill"> & {
   strokeClassName?: string;
   fillClassName?: string;
+  stroke?: string;
+  fill?: string;
 };
 
 type StyledCircleProps = Omit<CircleProps, "stroke" | "fill"> & {
   strokeClassName?: string;
   fillClassName?: string;
+  stroke?: string;
+  fill?: string;
 };
 
 type StyledLineProps = Omit<LineProps, "stroke"> & {
@@ -62,15 +68,15 @@ type StyledLineProps = Omit<LineProps, "stroke"> & {
  * <StyledPath d="M10 10" fillClassName="accent-primary" />
  */
 export const StyledPath = forwardRef<BasePath, StyledPathProps>(
-  ({ strokeClassName, fillClassName, ...props }, ref) => {
+  ({ strokeClassName, fillClassName, stroke, fill, ...props }, ref) => {
     const strokeStyles = useResolveClassNames(strokeClassName ?? "");
     const fillStyles = useResolveClassNames(fillClassName ?? "");
 
     return (
       <BasePath
         ref={ref}
-        stroke={strokeStyles.accentColor as string | undefined}
-        fill={fillStyles.accentColor as string | undefined}
+        stroke={stroke ?? (strokeStyles.accentColor as string | undefined)}
+        fill={fill ?? (fillStyles.accentColor as string | undefined)}
         {...props}
       />
     );
@@ -79,15 +85,15 @@ export const StyledPath = forwardRef<BasePath, StyledPathProps>(
 StyledPath.displayName = "StyledPath";
 
 export const StyledRect = forwardRef<BaseRect, StyledRectProps>(
-  ({ strokeClassName, fillClassName, ...props }, ref) => {
+  ({ strokeClassName, fillClassName, stroke, fill, ...props }, ref) => {
     const strokeStyles = useResolveClassNames(strokeClassName ?? "");
     const fillStyles = useResolveClassNames(fillClassName ?? "");
 
     return (
       <BaseRect
         ref={ref}
-        stroke={strokeStyles.accentColor as string | undefined}
-        fill={fillStyles.accentColor as string | undefined}
+        stroke={stroke ?? (strokeStyles.accentColor as string | undefined)}
+        fill={fill ?? (fillStyles.accentColor as string | undefined)}
         {...props}
       />
     );
@@ -96,15 +102,15 @@ export const StyledRect = forwardRef<BaseRect, StyledRectProps>(
 StyledRect.displayName = "StyledRect";
 
 export const StyledCircle = forwardRef<BaseCircle, StyledCircleProps>(
-  ({ strokeClassName, fillClassName, ...props }, ref) => {
+  ({ strokeClassName, fillClassName, stroke, fill, ...props }, ref) => {
     const strokeStyles = useResolveClassNames(strokeClassName ?? "");
     const fillStyles = useResolveClassNames(fillClassName ?? "");
 
     return (
       <BaseCircle
         ref={ref}
-        stroke={strokeStyles.accentColor as string | undefined}
-        fill={fillStyles.accentColor as string | undefined}
+        stroke={stroke ?? (strokeStyles.accentColor as string | undefined)}
+        fill={fill ?? (fillStyles.accentColor as string | undefined)}
         {...props}
       />
     );
