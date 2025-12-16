@@ -4,6 +4,7 @@ import { StyledPath, StyledLine, StyledRect, StyledCircle } from "@/lib/styled";
 
 type IconProps = Omit<SvgProps, "children"> & {
   className?: string;
+  color?: string;
 };
 
 export const Icons = {
@@ -46,7 +47,7 @@ export const Icons = {
     );
   },
 
-  moon: ({ className = "accent-foreground", ...props }: IconProps) => {
+  moon: ({ className = "accent-foreground", color, ...props }: IconProps) => {
     return (
       <Svg
         viewBox="0 0 24 24"
@@ -56,12 +57,16 @@ export const Icons = {
         strokeLinejoin="round"
         {...props}
       >
-        <StyledPath strokeClassName={className} d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        {color ? (
+          <StyledPath stroke={color} d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        ) : (
+          <StyledPath strokeClassName={className} d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        )}
       </Svg>
     );
   },
 
-  sun: ({ className = "accent-foreground", ...props }: IconProps) => {
+  sun: ({ className = "accent-foreground", color, ...props }: IconProps) => {
     return (
       <Svg
         viewBox="0 0 24 24"
@@ -71,13 +76,22 @@ export const Icons = {
         strokeLinejoin="round"
         {...props}
       >
-        <StyledCircle cx="12" cy="12" r="5" strokeClassName={className} />
-        <StyledPath strokeClassName={className} d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        {color ? (
+          <>
+            <StyledCircle cx="12" cy="12" r="5" stroke={color} />
+            <StyledPath stroke={color} d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </>
+        ) : (
+          <>
+            <StyledCircle cx="12" cy="12" r="5" strokeClassName={className} />
+            <StyledPath strokeClassName={className} d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </>
+        )}
       </Svg>
     );
   },
 
-  monitor: ({ className = "accent-foreground", ...props }: IconProps) => {
+  monitor: ({ className = "accent-foreground", color, ...props }: IconProps) => {
     return (
       <Svg
         viewBox="0 0 24 24"
@@ -87,8 +101,17 @@ export const Icons = {
         strokeLinejoin="round"
         {...props}
       >
-        <StyledRect x="2" y="3" width="20" height="14" rx="2" ry="2" strokeClassName={className} />
-        <StyledPath strokeClassName={className} d="M8 21h8M12 17v4" />
+        {color ? (
+          <>
+            <StyledRect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke={color} />
+            <StyledPath stroke={color} d="M8 21h8M12 17v4" />
+          </>
+        ) : (
+          <>
+            <StyledRect x="2" y="3" width="20" height="14" rx="2" ry="2" strokeClassName={className} />
+            <StyledPath strokeClassName={className} d="M8 21h8M12 17v4" />
+          </>
+        )}
       </Svg>
     );
   },
