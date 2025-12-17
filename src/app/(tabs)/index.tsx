@@ -948,9 +948,9 @@ function MasonryGrid({ children }: { children: React.ReactNode[] }) {
   });
 
   return (
-    <View className="flex-row gap-4">
+    <View className="flex-row gap-4 overflow-visible">
       {columns.map((column, columnIndex) => (
-        <View key={columnIndex} className="flex-1 gap-4">
+        <View key={columnIndex} className="flex-1 gap-4 overflow-visible">
           {column}
         </View>
       ))}
@@ -1008,8 +1008,8 @@ export default function HomePage() {
           </View>
         </View>
 
-        <View className="px-4 pb-8 md:px-8 lg:px-12">
-          <View className="max-w-6xl w-full mx-auto">
+        <View className="px-4 pb-8 md:px-8 lg:px-12 overflow-visible">
+          <View className="max-w-6xl w-full mx-auto overflow-visible">
             <MasonryGrid>
               <BadgesDemo />
               <ButtonsDemo />
