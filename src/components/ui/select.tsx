@@ -410,14 +410,24 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
 
     if (!colorsLoaded) {
       return (
-        <View ref={containerRef} className={cn("z-50", className)} {...props}>
+        <View
+          ref={containerRef}
+          className={cn("z-50", className)}
+          style={{ zIndex: open ? 5000 : 1 }}
+          {...props}
+        >
           {children}
         </View>
       );
     }
 
     return (
-      <View ref={containerRef} className={cn("z-50", className)} {...props}>
+      <View
+        ref={containerRef}
+        className={cn("z-50", className)}
+        style={{ zIndex: open ? 5000 : 1 }}
+        {...props}
+      >
         {children}
         <DropDownPicker
           key={pickerKey}
@@ -447,6 +457,10 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
           categorySelectable={false}
           zIndex={5000}
           zIndexInverse={4000}
+          containerStyle={{
+            position: "relative",
+            zIndex: open ? 5000 : 1,
+          }}
           style={{
             backgroundColor: triggerBg,
             borderColor: border,
@@ -465,10 +479,11 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
             marginTop: 4,
             overflow: "hidden",
             shadowColor: foreground,
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            elevation: 4,
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.15,
+            shadowRadius: 8,
+            elevation: 10,
+            zIndex: 5000,
           }}
           textStyle={{
             color: foreground,
