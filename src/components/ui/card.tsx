@@ -52,7 +52,7 @@ export const Card = forwardRef<View, CardProps>(
       <View
         ref={ref}
         className={cn(
-          "bg-card text-card-foreground flex-col gap-6 rounded-xl border border-border py-6 shadow-sm",
+          "bg-card text-card-foreground flex-col gap-6 rounded-xl border border-border py-6 shadow-sm overflow-visible",
           className
         )}
         {...props}
@@ -181,7 +181,7 @@ export const CardContent = forwardRef<View, CardContentProps>(
     return (
       <View
         ref={ref}
-        className={cn("px-6", className)}
+        className={cn("px-6 overflow-visible", className)}
         {...props}
       >
         {children}
