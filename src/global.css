@@ -7,6 +7,10 @@
   Useful for third-party libraries (charts, maps, etc.)
 */
 @theme static {
+  /* Colors accessed via useCSSVariable() - default values overridden by theme variants */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0 0);
+
   /* Font families - must be in static for useCSSVariable() access */
   /* Names must match font file names exactly (without extension) */
   --font-sans: SpaceMono-Regular;
