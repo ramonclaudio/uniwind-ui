@@ -429,6 +429,19 @@ export const SelectTrigger = forwardRef<View, SelectTriggerProps>(
         {...props}
       >
         {children}
+        {Platform.OS !== "web" && open && (
+          <Pressable
+            onPress={() => setOpen(false)}
+            style={{
+              position: "absolute",
+              top: -1000,
+              left: -1000,
+              right: -1000,
+              bottom: -1000,
+              zIndex: 4999,
+            }}
+          />
+        )}
         <DropDownPicker
           key={pickerKey}
           open={open}
