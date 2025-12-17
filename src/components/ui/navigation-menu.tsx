@@ -97,14 +97,6 @@ function useIconColor(): string {
   return color;
 }
 
-function usePopoverColors() {
-  const [popoverBg, borderColor] = useCSSVariable([
-    "--color-popover",
-    "--color-border",
-  ]) as string[];
-  return { popoverBg, borderColor };
-}
-
 function calculateVisibleCount(
   itemWidths: Map<number, number>,
   availableWidth: number,
@@ -283,7 +275,7 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
     const { activeItem, setActiveItem } = useContext(NavigationMenuContext);
     const childArray = Children.toArray(children);
 
-    const rawFontFamily = useCSSVariable("--font-sans") as string;
+    const [rawFontFamily, foregroundColor] = useCSSVariable(["--font-sans", "--color-foreground"]) as string[];
     const fontFamily = rawFontFamily?.split(",")[0]?.trim()?.replace(/^["']|["']$/g, "");
     const nativeFontStyle = Platform.OS !== "web" && fontFamily ? { fontFamily } : undefined;
 
@@ -378,15 +370,35 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
             </Pressable>
 
             {isOverflowActive && (
-              <View
-                className={cn(
-                  "absolute top-full right-0 mt-1 min-w-[180px]",
-                  "bg-popover text-popover-foreground border border-border rounded-md p-2",
-                  "ios:shadow-lg android:elevation-8 web:shadow-lg"
+              <>
+                {Platform.OS !== "web" && (
+                  <Pressable
+                    onPress={closeOverflow}
+                    style={{
+                      position: "absolute",
+                      top: -1000,
+                      left: -1000,
+                      right: -1000,
+                      bottom: -1000,
+                      zIndex: 4999,
+                    }}
+                  />
                 )}
-                style={{ zIndex: 51 }}
-                onStartShouldSetResponder={() => true}
-              >
+                <View
+                  className={cn(
+                    "absolute top-full right-0 mt-1 min-w-[180px]",
+                    "bg-popover text-popover-foreground border border-border rounded-md p-2 z-50"
+                  )}
+                  style={{
+                    zIndex: 5000,
+                    shadowColor: foregroundColor,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.15,
+                    shadowRadius: 8,
+                    elevation: 10,
+                  }}
+                  onStartShouldSetResponder={() => true}
+                >
                 {hiddenItems.map((child, index) => {
                   if (!isValidElement(child)) return null;
 
@@ -443,7 +455,8 @@ export const NavigationMenuList = forwardRef<View, NavigationMenuListProps>(
                   }
                   return null;
                 })}
-              </View>
+                </View>
+              </>
             )}
           </View>
         )}
@@ -626,6 +639,7 @@ export interface NavigationMenuContentProps extends ViewProps {
 export const NavigationMenuContent = forwardRef<View, NavigationMenuContentProps>(
   ({ children, className = "", value, ...props }, ref) => {
     const { activeItem, setActiveItem } = useContext(NavigationMenuContext);
+    const foregroundColor = useCSSVariable("--color-foreground") as string;
     const isVisible = value ? activeItem === value : true;
 
     if (!isVisible) return null;
@@ -641,7 +655,7 @@ export const NavigationMenuContent = forwardRef<View, NavigationMenuContentProps
               left: -1000,
               right: -1000,
               bottom: -1000,
-              zIndex: 40,
+              zIndex: 4999,
             }}
           />
         )}
@@ -650,9 +664,16 @@ export const NavigationMenuContent = forwardRef<View, NavigationMenuContentProps
           className={cn(
             "absolute top-full left-0 mt-1.5 min-w-[220px]",
             "bg-popover text-popover-foreground border border-border rounded-md p-2 z-50",
-            "ios:shadow-lg android:elevation-8 web:shadow-lg",
             className
           )}
+          style={{
+            zIndex: 5000,
+            shadowColor: foregroundColor,
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.15,
+            shadowRadius: 8,
+            elevation: 10,
+          }}
           {...props}
         >
           {children}
