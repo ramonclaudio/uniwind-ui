@@ -2,16 +2,14 @@
 
 [Docs](https://uniwind-ui.vercel.app/) · [Components](https://uniwind-ui.vercel.app/docs/components)
 
-shadcn/ui components for React Native, built on [Uniwind](https://uniwind.dev/).
+I use shadcn/ui in every TypeScript project I build. When I started using Uniwind for React Native, I wanted the same experience: well-designed components I could copy, paste, and own. Nothing like that existed, so I built it.
 
-I use shadcn/ui in every TypeScript project I build. When I started using Uniwind for React Native, I wanted the same experience: well-designed components I could copy, paste, and own. This didn't exist, so I built it.
-
-Copy the code. Modify it. Ship it.
+shadcn/ui components for React Native, built on [Uniwind](https://uniwind.dev/). Copy the code, modify it, ship it.
 
 ## Components
 
 | Component | Description |
-|-----------|-------------|
+| --- | --- |
 | [Badge](src/components/ui/badge.tsx) | Status indicators and labels |
 | [Button](src/components/ui/button.tsx) | 6 variants: default, destructive, outline, secondary, ghost, link |
 | [Card](src/components/ui/card.tsx) | Header, content, footer composition |
@@ -27,40 +25,28 @@ Copy the code. Modify it. Ship it.
 
 ## Usage
 
-1. Copy the component you need from [`src/components/ui/`](src/components/ui/)
-2. Copy [`src/lib/utils.ts`](src/lib/utils.ts) into your project (required for the `cn` utility)
+1. Copy the component from [`src/components/ui/`](src/components/ui/)
+2. Copy [`src/lib/utils.ts`](src/lib/utils.ts) (required for the `cn` utility)
 3. Import and use
 
 ## Requirements
 
-Your project needs:
 - React Native 0.76+
 - Uniwind 1.0+
 - Tailwind CSS 4+
-- clsx, tailwind-merge
+- `clsx`, `tailwind-merge`
 
-Additional dependencies:
+Per-component dependencies:
 
 | Component | Dependency | Swappable |
-|-----------|------------|-----------|
-| Select | react-native-dropdown-picker | - |
-| Checkbox | @expo/vector-icons | Any icon library |
-| NavigationMenu | @expo/vector-icons, expo-router | Any icon library, any router |
+| --- | --- | --- |
+| Select | `react-native-dropdown-picker` | no |
+| Checkbox | `@expo/vector-icons` | any icon library |
+| NavigationMenu | `@expo/vector-icons`, `expo-router` | any icon library, any router |
 
 ## Why Uniwind
 
-[Uniwind](https://uniwind.dev/) is from the creators of Unistyles. It's the fastest Tailwind implementation for React Native, 2.5x faster than alternatives. Styles are precomputed at build time. Zero runtime cost.
-
-If you know Tailwind, you know Uniwind. Same classNames, native performance.
-
-## Links
-
-- [Uniwind](https://uniwind.dev/)
-- [shadcn/ui](https://ui.shadcn.com/)
-
-## Author
-
-[Ray](https://x.com/ramonclaudio)
+[Uniwind](https://uniwind.dev/) is from the creators of Unistyles. Fastest Tailwind implementation for React Native, 2.5x faster than alternatives. Styles are precomputed at build time, zero runtime cost. Same classNames as Tailwind, native performance.
 
 ## License
 
